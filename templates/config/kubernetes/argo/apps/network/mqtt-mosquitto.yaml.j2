@@ -9,7 +9,7 @@ metadata:
 spec:
   project: home-kubernetes
   sources:
-    - repoURL: #{ bootstrap_github_address }#
+    - repoURL: "https://github.com/#{ repository_name }#.git"
       path: kubernetes/apps/network/mqtt
       targetRevision: #{ bootstrap_github_branch|default('main', true) }#
       ref: repo

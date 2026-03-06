@@ -9,7 +9,7 @@ metadata:
 spec:
   project: home-kubernetes
   sources:
-    - repoURL: 
+    - repoURL: "https://github.com/enicky/cluster-template2.git"
       path: kubernetes/apps/network/mqtt
       targetRevision: main
       ref: repo
