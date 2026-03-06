@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: longhorn
+  namespace: argo-system
+  annotations:
+    argocd.argoproj.io/sync-wave: '0'
+spec:
+  project: home-kubernetes
+  sources:
+    - repoURL: https://github.com/enicky/cluster-template.git
+      path: kubernetes/apps/longhorn-system/longhorn
+      targetRevision: main
+      ref: repo
+    - repoURL: https://charts.longhorn.io
+      chart: longhorn
+      targetRevision: v1.8.0
+      helm:
+        releaseName: longhorn
+        valueFiles:
+          - $repo/kubernetes/apps/longhorn-system/longhorn/values.sops.yaml
+  destination:
+    name: in-cluster
+    namespace: longhorn-system
+  syncPolicy:
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
