@@ -7,8 +7,8 @@ TALOSCONFIG = "{{config_root}}/talos/clusterconfig/talosconfig"
 [tasks.deps]
 description = "Install Helm dependencies"
 run = [
-  "helm plugin list | grep -q 'secrets' && helm plugin update secrets || helm plugin install https://github.com/jkroepke/helm-secrets",
-  "helm plugin list | grep -q 'diff' && helm plugin update diff || helm plugin install https://github.com/databus23/helm-diff"
+  "helm plugin list | grep -q 'secrets' && helm plugin update secrets || helm plugin install --verify=false https://github.com/jkroepke/helm-secrets",
+  "helm plugin list | grep -q 'diff' && helm plugin update diff || helm plugin install --verify=false https://github.com/databus23/helm-diff"
 ]
 
 [tools]

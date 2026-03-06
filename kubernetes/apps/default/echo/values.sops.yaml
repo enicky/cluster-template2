@@ -1,0 +1,28 @@
+route:
+  app:
+    hostnames:
+      - echo.gitlab.be
+    parentRefs:
+      - name: envoy-external
+        namespace: kube-system
+        sectionName: https
+    rules:
+      - backendRefs:
+          - identifier: app
+            port: 8080
+sops:
+  age:
+    - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBnZi9SL2R3WVYrWWRUSEJI
+        aUozRWE0VWFGVHpmRmN3NnlBMkpUZnlCS0NFCklpZVRveGdlYTRCR1hxQVBYaXA2
+        Um5iNFRydGlaR3I4akV6WDhXNGNHeTQKLS0tIDlYYzZiZjdMaHBuTm5hMW9wRGtE
+        Q3VhVko3YXNiWlB6WjlUOVdxOExkL1UKBLHJ5Mz6s2/oUuNDwkf+5FZH0Sj5z4Mx
+        2Wy1N3UxDJeOkcdps5t8sKz1uOwwPWlnjwRvuWpdLikTNRMV6dpCqw==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-03-06T15:14:34Z"
+  mac: ENC[AES256_GCM,data:bUbc3K/SrHZK+gLn04FplPww087JZ6yEBtUwcym9JGj9Tkbdgpzog6xfwlvP18A/S5FevU45rwpwJb5Sgn6pYy22NsTbtPXJI9KaEI8ZTCcux6qC3PWlx9ye686+yi/gM6nMObf2mCXucFN482jn8OefJsNGjtT+pGigrHnRQMQ=,iv:Tnmd5yseiDW+AZqM+yxRtZCtsFNiDxVj5hGTqtekPNQ=,tag:QzVsmE5+tDRU3nXo8c3gWg==,type:str]
+  encrypted_regex: ^(data|stringData)$
+  mac_only_encrypted: true
+  version: 3.12.1

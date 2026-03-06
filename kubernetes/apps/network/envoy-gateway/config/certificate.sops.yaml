@@ -1,0 +1,33 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: gitlab-be-production
+spec:
+  dnsNames:
+    - gitlab.be
+    - '*.gitlab.be'
+  duration: 160h
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  privateKey:
+    algorithm: ECDSA
+  secretName: gitlab-be-production-tls
+  usages:
+    - digital signature
+sops:
+  age:
+    - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB5c2ZKNDRxZ09wSXd1U3pB
+        bGoydUtlMThZZFJhMzNPOHFPMWt5MVBTa21nCkIvSmRoSWdLd2wxMnZab0VzSVlw
+        bFE0L2d2cVM1dnVDQ2EyNm81QmozOXMKLS0tIDNJWk82RE0xYU85Z1g2RkszcHdE
+        QjRuem5sdWg5bU5DTTF5NzVlNXRuTk0KbcRsMCFhXOkuvw0Z4GuTKJkklS9i5xGO
+        siCi0xtHqMaVFpujRMu2aAhEGdswtWCJ0BQYhCpl3QsBEoKuSDBW/w==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-03-06T15:14:34Z"
+  mac: ENC[AES256_GCM,data:sycLcEmSlTmAgBdy6vDpoWZDk8MnWeW/bHzlqu/X13iuyzAYMqBZ+mzQgwq4ed2Gz2qFqx4aYuK7w4Bx3/2LrWqVviNUOwlpRCOcPhiVQnvFLCFjyRkvz+8Zjj/7p7uP1hgKhe6XSfkSIzmkMcaJXql5j5LT37c3919AbqJI3pY=,iv:duYhCfe7+8XF/UAbI8YMzas4O/pCvNT8mUceaOqZFnw=,tag:r3ixlwvXZbgM1KeVYsQ3dw==,type:str]
+  encrypted_regex: ^(data|stringData)$
+  mac_only_encrypted: true
+  version: 3.12.1
