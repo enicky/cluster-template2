@@ -7,12 +7,7 @@ function log() {
     shift
 
     # Define log levels with their priorities
-    local -A level_priority=(
-        [debug]=1
-        [info]=2
-        [warn]=3
-        [error]=4
-    )
+    set +u; declare -A level_priority=([debug]=1 [info]=2 [warn]=3 [error]=4); set -u
 
     # Get the current log level's priority
     local current_priority=${level_priority[$level]:-2} # Default to "info" priority
@@ -27,15 +22,10 @@ function log() {
     fi
 
     # Define log colors
-    local -A colors=(
-        [debug]="\033[1m\033[38;5;63m"  # Blue
-        [info]="\033[1m\033[38;5;87m"   # Cyan
-        [warn]="\033[1m\033[38;5;192m"  # Yellow
-        [error]="\033[1m\033[38;5;198m" # Red
-    )
+    set +u; declare -A colors=([debug]="\033[1m\033[38;5;63m" [info]="\033[1m\033[38;5;87m" [warn]="\033[1m\033[38;5;192m" [error]="\033[1m\033[38;5;198m"); set -u
 
     # Fallback to "info" if the color for the given level is not defined
-    local color="${colors[$level]:-${colors[info]}}"
+    local color="${colors[$level]:-${colors["info"]}}"
     local msg="$1"
     shift
 

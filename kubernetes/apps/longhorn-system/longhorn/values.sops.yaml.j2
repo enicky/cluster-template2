@@ -1,0 +1,11 @@
+ingress:
+  enabled: true
+  host: longhorn2.gitlab.be
+  ingressClassName: "internal"
+
+service:
+  ui:
+    type: ClusterIP
+
+defaultSettings:
+  defaultDataPath: /var/mnt/storage
