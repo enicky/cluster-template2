@@ -8,10 +8,7 @@ metadata:
 spec:
   project: kubernetes
   sources:
-    - repoURL: "https://github.com/enicky/cluster-template2.git"
-      path: kubernetes/apps/longhorn-system/longhorn
-      targetRevision: main
-      ref: repo
+
     - repoURL: https://charts.longhorn.io
       chart: longhorn
       targetRevision: v1.11.0
