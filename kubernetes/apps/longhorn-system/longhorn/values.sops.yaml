@@ -7,19 +7,21 @@ service:
     type: ClusterIP
 defaultSettings:
   defaultDataPath: /var/mnt/storage
+preUpgradeChecker:
+  jobEnabled: false
 sops:
   age:
     - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
       enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBNY1FNZ2VFekRnRGp3Nm1y
-        QnVlWG01dEpBL3FHdFBLaFlIZzhGQkRpN0U4Cm1oelMzaGluRnRzQU9hc0hnQVlu
-        cHpSaUFyRnFYU3JBMzc3U3Y2cjBqVkUKLS0tIGZqSWVwc01YOWs4enNsdG9PeVBK
-        c0JlbkdwdXplcDAvQmhrSTNEQ2RhVncKT8dBVC5r8u5+ET15i5AbFtQL0n37CPE/
-        qnSGIliq/gXVR5Z/yhCKoSH0ljlbCH3PqNhv6um+Ne4Q9XFGL+Iwwg==
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBzbUdHcWNISTlJSDRNdDdC
+        YmZkU09BdE13OEI1Uit2Z09FT21SMTM0eno4ClRnMEEwME9ISXNmcnZPdkZBV0JN
+        OHoyWWd3OXN3Uy9sQnVrUVRKQjBpOTAKLS0tIGxPMHRteWZ4dmlja1dTbHpZUm9Y
+        RGxFZXgxdXFzTC9OaUYzVnVvZWFUbGsKcV0J/I1rIxZL6O35J8+zuZZLLnbH5i3s
+        24FNqnu8v7UR8XOtxIJWvvNdkmxtP8FWd80tgjISbmfADym52r7C2w==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2026-03-06T19:31:56Z"
-  mac: ENC[AES256_GCM,data:zEjRbfjBqOBI+GyI/AR3kEo5qi6TVv88EuG+TuNeC7M0ORkbh1tiWx4Ik++hYptu5Jx1jsSy6jAPHCnwrSTXQrqwmO1wGDcAiJwQvJc6zuhesjcgYmtUB8DJw9PPUBgWCb2kLHS8J5ZPHLadWl/DSSuuyxX4C1qz4BfFcm70YZA=,iv:sfiF5ExS7g5RG+oT9TKtrhSjZYTTW7pVIzxBcjqIWXY=,tag:q21b2R95eyfviqabGLXJ3w==,type:str]
+  lastmodified: "2026-03-06T19:36:57Z"
+  mac: ENC[AES256_GCM,data:aLkUCGEn5MSdJDe9JvGnTbp45LQhxiyYRZ1kdWJD6pL3KRB7ED2XZtf2I/mSWIVVXF59Dv8Y85uJ8Y+GT1GS1cv2a77u3GLLPVIlbyyYdNM5vTVbPqBuizdD0DQI3akTgKE51uHbRtZcC9wV/bQLxJHMKPp3k0io1hIkPy2wHk0=,iv:BOCaX4Jv+I3M/g8v0htmOKvpUAAtKAFP5yeknRwcLLE=,tag:LsvTXMHO9iPNPeMMA45avw==,type:str]
   encrypted_regex: ^(data|stringData)$
   mac_only_encrypted: true
   version: 3.12.1
