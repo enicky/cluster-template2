@@ -18,12 +18,31 @@ cniConfig:
   name: none
 
 nodes:
+  - hostname: "controller-1"
+    ipAddress: "192.168.1.10"
+    installDisk: "/dev/nvme0n1"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/4f0e9de2c7a093bfbe751be35b78c46fdbe713a6d886dc4190afaabb5ca16fd0
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "b2:f8:cf:21:be:be"
+        dhcp: false
+        addresses:
+          - "192.168.1.10/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "192.168.1.1"
+        mtu: 1500
+        vip:
+          ip: "192.168.1.20"
   - hostname: "controller-3"
     ipAddress: "192.168.1.12"
     installDisk: "/dev/nvme0n1"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/59fbc7cee4e5a568b633d98cd28c07dd27702fe8b7cad48868a977008f0f49f2
+    talosImageURL: factory.talos.dev/installer/21673f307f6aa5382ee221fcda6aefb7ef05d1c46e104bac35f24a6a4964b4e5
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -42,7 +61,7 @@ nodes:
     installDisk: "/dev/nvme0n1"
     machineSpec:
       secureboot: false
-    talosImageURL: factory.talos.dev/installer/0f2e451d5c40999acbaf8df1d23f2e1f521cccf955d4defbcba6ffaca543a2ca
+    talosImageURL: factory.talos.dev/installer/2e62da814c27518e6d74a8875e661dc4b4c359f3eadf1e7766a4d145089e228d
     controlPlane: true
     networkInterfaces:
       - deviceSelector:
@@ -50,25 +69,6 @@ nodes:
         dhcp: false
         addresses:
           - "192.168.1.13/24"
-        routes:
-          - network: "0.0.0.0/0"
-            gateway: "192.168.1.1"
-        mtu: 1500
-        vip:
-          ip: "192.168.1.20"
-  - hostname: "controller-1"
-    ipAddress: "192.168.1.10"
-    installDisk: "/dev/nvme0n1"
-    machineSpec:
-      secureboot: false
-    talosImageURL: factory.talos.dev/installer/a25216969818193f030ffc088de38542752d5a2abf5108987db1f3f3e8f5e8e4
-    controlPlane: true
-    networkInterfaces:
-      - deviceSelector:
-          hardwareAddr: "b2:f8:cf:21:be:be"
-        dhcp: false
-        addresses:
-          - "192.168.1.10/24"
         routes:
           - network: "0.0.0.0/0"
             gateway: "192.168.1.1"

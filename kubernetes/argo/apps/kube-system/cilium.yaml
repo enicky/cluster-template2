@@ -9,7 +9,7 @@ metadata:
 spec:
   project: kubernetes
   sources:
-    - repoURL: "https://github.com/enicky/cluster-template.git"
+    - repoURL: "https://github.com/enicky/cluster-template2.git"
       path: kubernetes/apps/kube-system/cilium
       targetRevision: main
       ref: repo
