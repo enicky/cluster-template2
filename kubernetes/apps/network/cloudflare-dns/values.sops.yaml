@@ -1,11 +1,10 @@
----
 fullnameOverride: cloudflare-dns
 provider: cloudflare
 env:
   - name: CF_API_TOKEN
     valueFrom:
       secretKeyRef:
-        name: &secret cloudflare-dns-secret
+        name: cloudflare-dns-secret
         key: api-token
 extraArgs:
   - --cloudflare-dns-records-per-page=1000
@@ -15,11 +14,30 @@ extraArgs:
   - --gateway-name=envoy-external
 triggerLoopOnEvent: true
 policy: sync
-sources: ["crd", "gateway-httproute"]
+sources:
+  - crd
+  - gateway-httproute
 txtPrefix: k8s.
 txtOwnerId: default
-domainFilters: ["gitlab.be"]
+domainFilters:
+  - gitlab.be
 serviceMonitor:
   enabled: true
 podAnnotations:
-  secret.reloader.stakater.com/reload: *secret
+  secret.reloader.stakater.com/reload: cloudflare-dns-secret
+sops:
+  age:
+    - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBHcnppaDlONmpjRHdqbGRT
+        bHE2dUgwZE1Gc2kyNFREMi83cDBZYU42R1hNCmRqeDZteHRxeDZOcTNMM0R1SG04
+        YnpSWXdNczBkZzdpbnU3N2RjcktuME0KLS0tIGJJbFUzYXZ5WmF4LzFaa1BBaTZX
+        VXh0VENXNUxqVy8yeVRBUGwvcHkyblkKonh39YUxcaaGiBbndIUQsMXaGy90wMRC
+        h/nDsvmRvmdjfRLANf2rlQHp0TcjgCvBZvQGKv8GukIYbJyxxTl3Fg==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-03-07T22:40:44Z"
+  mac: ENC[AES256_GCM,data:lPLLYUmiVILuCvnkNHhHLCxcGXaKtig0VSo1L867davD5JqabixCzl5UbHUvWAO00iT79KrPWWmVC/IuKlz7MC+7YEcsAmoeiPnk4PC7rxgLf5MEaW02+RNZINlc9ghshpuGwPDSCsYEvpcGyqT2hO4yAea4i0npvaaWwMhS7BQ=,iv:1fPTcN6MNA67+R5cYUucsAlxZCgpx1Hi6V1kDbqQag0=,tag:ygkd6eahsa6JxSRW2mNsiQ==,type:str]
+  encrypted_regex: ^(data|stringData)$
+  mac_only_encrypted: true
+  version: 3.12.1

@@ -1,17 +1,22 @@
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: cloudflare-tunnel-configmap
 data:
-  config.yaml: |
-    ---
-    originRequest:
-      originServerName: "external.gitlab.be"
-
-    ingress:
-      - hostname: "gitlab.be"
-        service: &svc https://envoy-external.network.svc.cluster.local
-      - hostname: "*.gitlab.be"
-        service: *svc
-      - service: http_status:404
+  config.yaml: ENC[AES256_GCM,data:uzh4t2l+/rkSaoZGA+lZt95EnFApLelrShC5A66VYpozxkN+tbAmU4vSKPeF44xzW1rJ/LaxaalDUG7LI97UahohOdHy8Yf64kkKxgMBjcISXdUMPim37hbx8pTeV+RT2/a7xE9JoVegqaE+7ClrdOvS2Ufc6o3LvKA7OtO3H1N4PeHKTqy8sA5a+A4yWfNDpPkINCDE91zT/AKHlAVa7o7ABuzH6yu4SQ+BOegYXWJdk+nuII74Rz5nxP4WDyxzcVCN6AL2aW+sKJmtA5B1kG4e0Ds73a59aHjM4dKhspgmu3JSo6gbG/SaL5Wwtg==,iv:mGQKLO/6A07BakS/8mVFqNXVSlSzJp/5diRyrsvEfFA=,tag:bhQmU4+/TIfs2SQzlsYEtQ==,type:str]
+sops:
+  age:
+    - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBVbVgzNDFqajljVzZtRFJl
+        OVJiVkxRY2t0SWhnTVVKVlQ5QXA3aUN0RkI4CmpPbWVTWmcrWGU4MmVPMDJyLzhN
+        K1VDRndOSjFjUjNDR09DTGNDZ0NFdGcKLS0tIGxqZkV0bVNWdHlUd1lva3psZmYx
+        d2JXWlBGeFJJaloxbUttTzBxSWFFZW8KSuNtXObxChRe1F6XjiAKRRc7LWwsGsvl
+        ho1erR5GFUbn0GNXwR3hpHcrBTZbLel86DhMkoW3aDdHjcmTKQ7eig==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-03-07T22:40:44Z"
+  mac: ENC[AES256_GCM,data:5dN4Ff4A2VkLLAvHIbYu8QNpCg7Q/Ccwbjf0japc2FTcceE42dDshuYsOk3uBikmuQqb0PtVpiiSYvcjarFewCSi9cTknDLfrE3Y7UuK4f6hsJBTXMBDAaAoc9RV+p7etSDdBzU06LPj4V9hHgTKrHrK34eIwm7DK/GHJjp7YaE=,iv:6jp60I2cllVP0AGWH85aqQEem2P0P2QbohvTRwWzXpo=,tag:96FpZ+xuQ0mkQQpX/GFucA==,type:str]
+  encrypted_regex: ^(data|stringData)$
+  mac_only_encrypted: true
+  version: 3.12.1

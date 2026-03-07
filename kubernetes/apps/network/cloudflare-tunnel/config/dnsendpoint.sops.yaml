@@ -1,10 +1,26 @@
----
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
   name: cloudflare-tunnel
 spec:
   endpoints:
-    - dnsName: "external.gitlab.be"
+    - dnsName: external.gitlab.be
       recordType: CNAME
-      targets: ["54580499-e05f-4728-9714-ada8c065e24e.cfargotunnel.com"]
+      targets:
+        - 54580499-e05f-4728-9714-ada8c065e24e.cfargotunnel.com
+sops:
+  age:
+    - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBRNHJMSjg0Q0xtWEZEQ3Vq
+        aStJemowM3ovaXJPd3ZHRXFLZlpya05OYlhvCllHZCt3emRYajA5d0lsamdqdEtV
+        ZWxHN1REQzQybUdoVlBPellvNW5zMGcKLS0tIDEvaUFTMTZwdWVRd2VPa3RKOGpp
+        dnczWm1rTCtKa2N0M3d6R3VLNXJOOXMK7vIvaUHB8/MxAbSEepHcZEpFTFEaJOmb
+        HtQgCvAkIdoYARHRfuUqoyW9fPZUoEdQj9x4fk4pOSm7cX4MkWUiRw==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-03-07T22:40:44Z"
+  mac: ENC[AES256_GCM,data:YbqaEN5dXrG+jav3DqP7oRPJ/1bHjSYpToGzSWkSLMvxLRlh+QJN3sOzEQ3OzvVcRiVvG7mzYiNgfpghOXAzXBTvuFvQYbenvYelKubJzD14u31sCUaxcwX272dsxs85v9VpmEWKvKCwTcGizf1r2VemNvVBYYQUGMXkq3CV7Q0=,iv:TqP95QMmCvni9z6KRoeoUSkry0PU6LJTr1dNvFf4/rQ=,tag:+LFJ9IMpZZNdBP/fj1IQWg==,type:str]
+  encrypted_regex: ^(data|stringData)$
+  mac_only_encrypted: true
+  version: 3.12.1

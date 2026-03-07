@@ -1,11 +1,28 @@
 route:
   app:
-    hostnames: ["echo.gitlab.be"]
+    hostnames:
+      - echo.gitlab.be
     parentRefs:
       - name: envoy-external
         namespace: network
         sectionName: https
     rules:
       - backendRefs:
-        - identifier: app
-          port: 8080
+          - identifier: app
+            port: 8080
+sops:
+  age:
+    - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA3UnJTR2RldkptQkhRUk5u
+        d0NkbzZ2aUlQQUtOMXJmcmV5emdZVTJOSkY0CnRuc0dLcUxld003TFpXUzFHNHFh
+        K2g1S0FsWEp6eXdhS1d4YUp4d3pKY2cKLS0tIDF0cTNNRThuSFpOOU52eDBNbVRk
+        OGlsUGMvLzdBR2xweGp6ZzN4N0RDNE0KtzbvmNs+rIvsP2p4cVvKqlq/4HBFRnFh
+        KJxT/WnifCOhC8fYTk6NgRGJSGIvCCq6Y7kZkF51Mv3Gpp+hGEIf2Q==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-03-07T22:40:45Z"
+  mac: ENC[AES256_GCM,data:wNALX+15m9XgHZ6kUF4EfjC56AqBSbsrsB0XMRiBorlc7cW2klNSdBz3FaLSoMbl50S3nVaBuwaUeoGd0LKddNRXQvmaSwhA9iX7g+QU8SjkRR8ZEPmdmC6nGx721SeItBDKd2oxcCP8U4zEAbSt0Hir7ycL+wwC+a1mjnNiDiM=,iv:T8JlyzrA680VZe6CFQ93wu6UmU0xSX2TXokbRuurxnI=,tag:L6/2JBOeOQyl99682ehAug==,type:str]
+  encrypted_regex: ^(data|stringData)$
+  mac_only_encrypted: true
+  version: 3.12.1

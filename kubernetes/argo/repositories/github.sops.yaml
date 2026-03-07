@@ -1,13 +1,28 @@
----
 apiVersion: v1
 kind: Secret
 metadata:
   name: github
   namespace: argo-system
   annotations:
-    argocd.argoproj.io/sync-wave: '1'
+    argocd.argoproj.io/sync-wave: "1"
   labels:
     argocd.argoproj.io/secret-type: repository
 stringData:
-  type: git
-  url: "https://github.com/enicky/cluster-template2.git"
+  type: ENC[AES256_GCM,data:e67v,iv:JW3O0B2BNeQb00Us5ACjkf3YqPs5AENbO3dD53hZwvg=,tag:h4EyFXlhfjU+NeMVvl1TuQ==,type:str]
+  url: ENC[AES256_GCM,data:mMBq1pDkLTP96XWZmY6ZnMwT44Rp5Ax8mbn87paMvwfkSibis5CkqcRkGBdUPBQ=,iv:/K9UZsZ2lxcszPXSSNCgDLM2njMSnNvdsWx4PjfFVC8=,tag:HyethjWqm87S3YH62RYT2g==,type:str]
+sops:
+  age:
+    - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB6Y3FQYkpHN0tUQTdRZGZ1
+        Vjk3Tld0N3RuamtCanBLWmdjbUNvN21VQWdnClkvTGw5dUZTZXM3a2FqUDRTd2Qv
+        RWs1WWpCdTU0SGJwaXFob0RUMElXUXcKLS0tIDB6U25BT1FINElXWnVhTldHRmh2
+        WUtPY3hER09xVHdCekNRRVFRai9QWlEKHYdbtURDIvgbJEFrvbJLFS8j8ZennXcb
+        TRP2CG/H4txhp5bQQiE0JZupJkOQowMpmaLpg9oSMYJJ/BZvnqcFgQ==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-03-07T22:40:44Z"
+  mac: ENC[AES256_GCM,data:dlxcVxfpZNzjIIbjMorWLJWl7EzTv+mIsYuobTbd/2o33n8nKy5Hmm8bm42zJ2IQkYKYAHdJG8LySrpo04ARuUaCcguZqTCF1d7ySORv78UMO/Xj7Oio2vQpoi+QRBNOFZRYnfWd2JXdshp6kimJgAbpE+8WDLdJiIT8JGPcLGo=,iv:d0DvDWhomZUmbLqZDs9pNKj/uRS9rPA2pCqpnPKqnjw=,tag:Z0IFpuZpSTL7VfSZJ/RLWA==,type:str]
+  encrypted_regex: ^(data|stringData)$
+  mac_only_encrypted: true
+  version: 3.12.1
