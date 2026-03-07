@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: longhorn-system
 resources:
   - https://raw.githubusercontent.com/longhorn/longhorn/v1.11.x/deploy/longhorn.yaml
+  - ./config
 patches:
   - target:
       kind: ConfigMap
