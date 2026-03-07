@@ -8,7 +8,7 @@ spec:
   - name: envoy-external
     namespace: network
   hostnames:
-  - home.#{ bootstrap_cloudflare.domain }#
+  - home.#{ cloudflare_domain }#
   rules:
   - backendRefs:
     - name: hassio-service
