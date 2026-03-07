@@ -17,6 +17,9 @@ spec:
       targetRevision: v1.11.0
       helm:
         releaseName: longhorn
+        valuesObject:
+          ingress:
+            enabled: false
         valueFiles:
           - $repo/kubernetes/apps/longhorn-system/longhorn/values.sops.yaml
   destination:
