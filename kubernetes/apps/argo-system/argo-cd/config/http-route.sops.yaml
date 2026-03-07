@@ -6,25 +6,8 @@ spec:
   parentRefs:
     - name: envoy-external
       namespace: network
-  hostnames:
-    - argo.gitlab.be
+  hostnames: ["argo.gitlab.be"]
   rules:
     - backendRefs:
         - name: argocd-server
           port: 80
-sops:
-  age:
-    - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
-      enc: |
-        -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBGSlJtbDdFOGRUR04wZHQv
-        SzQydEZkcHBPOFVrREUxZXFXSXNXL2lPd3dNCkhKdlBIdFNQMGJEb1NXRzR6Z21x
-        c0t3RnB0QXRvNjloS2pHMnRaVGVZZmcKLS0tIG5vZEFXVXV4ckYrWHY2ZHFTODZw
-        VXlsazNXeWVaZjNON1lkSmpvNjR3eWsK/1tIuaxBFEg34uMn132S0SYS3NG/hSPa
-        UYLAUsYmFMTrhZuR8mUUork4ip2eTcPkhYlgwcS37EqUpc0qRlpIFQ==
-        -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2026-03-07T22:07:34Z"
-  mac: ENC[AES256_GCM,data:c1k99jDwr8wf02gwlm2c1ieJGdfWMb1tExspQZeCneKCRV7WN8I8Mqqlig81E6edFGq68k+dZmJMBgDWkVidqsnzvYSeehPF7Ddi3mK/+QmTjrSap6ltCQVIuJ5JUPQf9Y8HB+ret6g71jWEmYVWBNT/SGGQhpLdJYDP0PvHZd4=,iv:XDaYXvOnO3up32XqZjYfxcLcXfaVrpwJy1PAP5EK6nU=,tag:oUbBzc8HmU+MhVVPg35XOA==,type:str]
-  encrypted_regex: ^(data|stringData)$
-  mac_only_encrypted: true
-  version: 3.12.1

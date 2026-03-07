@@ -1,27 +1,13 @@
 ingress:
   enabled: true
   host: longhorn2.gitlab.be
-  ingressClassName: internal
+  ingressClassName: "internal"
+
 service:
   ui:
     type: ClusterIP
+
 defaultSettings:
   defaultDataPath: /var/mnt/storage
 preUpgradeChecker:
   jobEnabled: false
-sops:
-  age:
-    - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
-      enc: |
-        -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBneS8yeFRsdWt2SFU0cUxJ
-        NXcxbW9CVjhjVjE3MnExYjRYV1ovdm5qYVdvCnJSWlNJM0JHTHFFSXVBbmxzbEN3
-        YjlLcVoxeDlvNzBDcHBJN05GNk9LNTgKLS0tICsyRVJFbkYvL0FENFAvTHFsbE9D
-        R1lCOE1NczlNTU5GNDFaRWlBVWMyOWsKkntGiIFDx5uqkb5fgTF3jLGrP0OaWHlc
-        HpLB9o3N4Ab72mIrfo+SIde20yalt1a1IeLUHjy239wpx4Q492jBSA==
-        -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2026-03-07T22:07:32Z"
-  mac: ENC[AES256_GCM,data:IeuGZlwUEbYJ33rZ0PzeUfgMuK7PLyirzHdXVcev3QcjJ2CEtFUjLAQjyIEFSA5jTP3A2ALz9T2hnDHCCXIhpfCBvrA+tegh5mxjRSSb5sqO+yqtGNFKb6uqrPdwn3jJDToH8jleDcgWQBo4FNotKnHJ8kxHuODluKikRPAUdUU=,iv:k9Rmb6GMTay8ZUO+ekHD309i8sDLO2fw2uZ2GR0gaXw=,tag:oF4xBZO0t1WleDQy9FZXBg==,type:str]
-  encrypted_regex: ^(data|stringData)$
-  mac_only_encrypted: true
-  version: 3.12.1

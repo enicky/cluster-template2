@@ -1,3 +1,4 @@
+---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
@@ -15,21 +16,4 @@ spec:
               name: cert-manager-secret
               key: api-token
         selector:
-          dnsZones:
-            - gitlab.be
-sops:
-  age:
-    - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
-      enc: |
-        -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBsdktySXQzQk5WREQ3NXFw
-        SERyTXdvK3M5cExSZ2NVa2hjNVRUU0VYQXlRCm5TR2trdHNaR3pmYjhYR1hQVjV6
-        cTYwbGZyRFNGb0JkOFpWcWtLTUwxcGcKLS0tIDE5Wi90ekhHcDVNanFLbGRjNHk2
-        ckFjZVAvazVZbTdlMTZZQ0VJOXhZcFEKrMSCBIqIPbW8xJyllra0scqtH3GXEdou
-        iIg9+QGMwsnE3rzGyVplU3bQoH2cS00dNOVfdeYd3kCzoMo8pv47/g==
-        -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2026-03-07T22:07:33Z"
-  mac: ENC[AES256_GCM,data:ihfYH0EVnFISNCl5SmmW2AmQSHQfJThraTlZ/5JqXBGxHAg0goWkhmYL9NuaXthjasUFYxnhCx3SL63i4v7rgeuVNjv4KVc5bOS1MqK/TP94ZUFSpoEyD15A0cETv9Pz/0K2dRLzSAH562ll4HfNDB2RELT5R7J3ZFIgAPlU1jA=,iv:poXFQGyzGv50whjGI51NN6AOM+mEN7I64ZLATVhBbAk=,tag:PKDmO01L/AIVCNaLxgW5pA==,type:str]
-  encrypted_regex: ^(data|stringData)$
-  mac_only_encrypted: true
-  version: 3.12.1
+          dnsZones: ["gitlab.be"]
