@@ -1,0 +1,138 @@
+---
+# Source: mqtt/templates/configmap.yaml
+# to generate a new password:
+#    mkdir ~/mosquitto
+#    sudo chown -R 1883:1883 ~/mosquitto
+#    docker run -it -p 1883:1883 --name mosquitto --restart always -v ~/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf -v ~/mosquitto/mosquitto.passwd:/mosquitto/config/mosquitto.passwd eclipse-mosquitto
+#    docker exec -it mosquitto /bin/sh
+#    cd mosquitto/config/
+#    mosquitto_passwd -c mosquitto.conf mqtt_user
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-mosquitto-conf
+  namespace: network
+  labels:
+    app: mqtt
+data:
+  mosquitto.conf: |
+    listener 1883
+    persistence true
+    persistence_location /mosquitto/data
+    persistence_file mosquitto.db
+    autosave_interval 60
+    password_file /mosquitto/config/mosquitto.passwd
+    allow_anonymous false
+  mosquitto.passwd: |
+    mqtt_user:$7$101$tXvYRVBe1Y+lrGyl$xVjG5ad+9q9T5psa05w4WQXJjkGmtCnSdZNfSp0pERGbqRocFYAsHG83yCf7a1+ajoLwMYS+Ytm18hOUr4lbxA==
+    homeassistant:$7$101$swvtZGdP5/aRT++j$ve2tcwlfdvd9mfOmDf6DcVAMy7IkUkdlkWFqP7q8YmFPWcgHuDjDUx9Z/fHni3osFNZ0mh5uRno96V2WyFZNIA==
+    Mac:$7$101$QviMJ2v+J5negpcF$jBKBvaLVI2da8EVtIQY6U1uIxfCqUG4Heyzi9nIAXbboAfTTUWZFachKo2s+lQNcZaXVUz9Dnlu4Irq3+AC+uA==
+    dsmr:$7$101$5RRzw+3RAz3vFP2M$emiDRUtk3UKmu9bXdHnVRCy+TjtAANCiHRg5MbsWZQcUdp0beLQLrU9BpWt74NcNh5MgAQJ74F/xbld24+VyMg==
+    dsmr32:$7$101$M1gritJxY7CNmT6Y$oVZaiGT4OftgUiSWN/EDhPsNC/Jl+35lTo8Q3/FB9cxHv/mcybzJuF4KNt4YXjaRY/c53sgVnZ5jlm/bcWV9QQ==
+    enicky:$7$101$G5E8l8k3ictD61tH$4V5CpgSaQhdeeayIKNDPEnkbc6sqEBZOi4M3iHYG7aYOq8bpwqyFn50aDQ39I9EIXxZa5pJbIhjd/uJyrZSJsQ==
+    evcc:$7$101$shHuRM7Pasa36dzi$YKDn93ftF/9xUR0DesMbv5f7QCEUM2DCaZZ4Jy8Re8NRMJtbuBCSR0uelMb1X3y2+0NfuhT27wVU8KL3vdx37A==
+    kubernetes:$7$101$5sC2xl2xBIgop411$zHVODR9rifgBUI5vX4lF0hd6wyiXg7xXdGR0iz7zdPpU6A48knHpu8fDQfHxB3mBChsxYHduNhCnh37C41Lk+w==
+    p1meter:$7$101$Qf2dLmAl1pKJJI+I$JyUXOAIIyxGL4k4J7Bg0Bn0TK+6pe+Kn01Ws8m4qoKweoHG7+DU4/iiIckT6Fe/ChlqlEFS1+623Uv/4K1d+hw==
+    tasmota:$7$101$KEiixsow3ZcmIbkB$eZxqJIJwaCrDpuZXLUpRhsmpENxMCn+vMCtZ8AIMEY9KhVrozkXwu8rASKbrpjjm2QYbUMvdA/mgbAQHoirqBA==
+    opensprinkler:$7$101$YZDqrFoIQ0dO63th$vBAxJvcKAgUFB+HSlTRzdGeV+lQQ/Yoq2D2foE1FOyZwROmrVJDINLmax+a2OEHp021qvmVMgB3+QoD0oMqXaw==
+---
+# Source: mqtt/templates/pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-mqtt
+  namespace: network
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 20M
+---
+# Source: mqtt/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: network
+  name: mosquitto-mqtt
+  labels:
+    helm.sh/chart: mqtt-0.1.0
+    app.kubernetes.io/name: mqtt
+    app.kubernetes.io/instance: mosquitto
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+      lbipam.cilium.io/ips: 192.168.1.26
+
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: port1883
+    protocol: TCP
+    port: 1883
+    targetPort: 1883
+  selector:
+    app: mqtt
+---
+# Source: mqtt/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mosquitto-mqtt
+  namespace: 
+  labels:
+    helm.sh/chart: mqtt-0.1.0
+    app.kubernetes.io/name: mqtt
+    app.kubernetes.io/instance: mosquitto
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mqtt
+      app.kubernetes.io/instance: mosquitto
+  template:
+    metadata:
+      annotations:
+        lbipam.cilium.io/ips: 192.168.1.26
+      labels:
+        helm.sh/chart: mqtt-0.1.0
+        app.kubernetes.io/name: mqtt
+        app.kubernetes.io/instance: mosquitto
+        app.kubernetes.io/version: "1.16.0"
+        app.kubernetes.io/managed-by: Helm
+        app: mqtt
+    spec:
+      securityContext:
+        fsGroup: 1883
+        runAsGroup: 1883
+        runAsNonRoot: true
+        runAsUser: 1833
+      containers:
+        - name: mqtt
+          securityContext:
+            {}
+          image: "eclipse-mosquitto:latest"
+          imagePullPolicy: IfNotPresent
+          #restartPolicy: Always
+          ports:
+            - containerPort: 1883
+            - containerPort: 9001
+          resources:
+            {}
+          volumeMounts:
+            - mountPath: /mosquitto/config
+              name: config-file
+            - mountPath: /mosquitto/data
+              name: data-volume
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: pvc-mqtt
+        - configMap:
+            name: cm-mosquitto-conf
+          name: config-file
