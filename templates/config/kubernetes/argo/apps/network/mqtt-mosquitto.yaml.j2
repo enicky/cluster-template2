@@ -13,6 +13,18 @@ spec:
       path: kubernetes/apps/network/mqtt
       targetRevision: #{ repository_branch }#
       ref: repo
+      helm:
+        releaseName: mosquitto
+        valuesObject:
+          replicaCount: 1
+          image:
+            repository: eclipse-mosquitto
+            tag: latest
+          podAnnotations:
+            lbipam.cilium.io/ips: "192.168.1.26"
+          service:
+            type: LoadBalancer
+            port: 1833
 
 
   destination:
