@@ -1,14 +1,30 @@
-{
-	"data": "ENC[AES256_GCM,data:6EiqdbfcxlckAfNnQfzE4b9T/8PhZQxqB9ckrC+uEcXioEs4D7gfbOtH+fJOz0yrNK1imuZw9gNXujvC5W74JDReL6mNYiC2UJPrgOoYXcNQM1I/hxfxPYyfyhiZhoypuSHgyNZPEOSzSS8GQcK88X3GFhJkqc3av7dZ8GgzC8nYXUtGaTa6QOSaQDOmma49sA4MQJPkyrr8MOE0O+U+ibdp/lkbxrdfUbyNvkurakyEExEpTdmmlImrXg+JRKn9Xqb0Bz2eKoU25BgPGxuJSxuaoVz8HQ7pnQZYH6ZlviML/ao8CumF6kflrS7FGSaTUVrEYKaApTTs9biL9FSgHKHm3H5XWa8=,iv:Mn3JHpOGBkVouMy6GNSO6gkaCUpmEyD21mnUCDFbEDM=,tag:zMWqYfdq+FZEv4sx0+mO6w==,type:str]",
-	"sops": {
-		"age": [
-			{
-				"recipient": "age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f",
-				"enc": "-----BEGIN AGE ENCRYPTED FILE-----\nYWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB1bFJNREVCUGRqSGhjTi9T\nK2U4bkVwdnBvTGc2N1ZSYm1WZXVPUjQxZ2xJCkN0K1RQSXk2SUIyK3ZIY2gxVTBJ\nMXNPZmFuWTFpZ2dLWi9RanFFbFhzdjgKLS0tIENmSEhpUkxFTmQyR3NtK2xwbWJZ\neENaQUlLamNDdDY1TERacWFIdVJXWUEK27ZzXNjIVNtRs5tl/iKOiNMY9f41ohfG\nVBuvo3Dpj0z2DECZy/zgretOsQGcejY4NubS+4bZPFU21vyQDpJdjA==\n-----END AGE ENCRYPTED FILE-----\n"
-			}
-		],
-		"lastmodified": "2026-03-07T21:30:05Z",
-		"mac": "ENC[AES256_GCM,data:wa6s/9h5nfziBZ1TyyNjlixWEzq5KwX34q6I+IpVQBuZWfrDN1XMXXSNJb9t4JLAW0jP8Z6YOnEMdmcklsGNimr1GbeYCrj+uldMZNgg91ia3usqStHuxR4uRl5SYT9+2WEFkW9650LCFWVJPf8zpEF4vR4afOYrgVpePuJr0n8=,iv:WfNfzm+i6tF2qW1GxgERXlhi15sk2MLq/krTmXOsUIY=,tag:cIr5LicBhmuCk7zO81G0JQ==,type:str]",
-		"version": "3.12.1"
-	}
-}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: argo
+spec:
+  parentRefs:
+    - name: envoy-external
+      namespace: network
+  hostnames:
+    - argo.gitlab.be
+  rules:
+    - backendRefs:
+        - name: argocd-server
+          port: 80
+sops:
+  age:
+    - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA1SktkN3orY3dTZEtxSzdJ
+        QVV1M08zQmRmQ3ZxRlYwUkhCRHFKeHFTNlNBCjBrQlRWVUlYVUpyNjFuS2FFVER0
+        TDVrd1Y1L2lqS1dBRzIxdFc2ZVBxamsKLS0tIER3U2NDelZlcWR1WHZLeDlzVk9P
+        dEh0WVF6aCtNc3dObVFxMmJSNTVPMTAKNUmTvn3c8dDOB51EXlQA4BVRr06icRBd
+        i8pm+1aXGbwf29ryZzFR3I51KLSdk4IW5RnPge1II5dBKOzgYEhUJQ==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-03-07T21:56:54Z"
+  mac: ENC[AES256_GCM,data:T0xBSNn3qGkZ1eNjLDWfdijEcL7Hu9BiJbBk37FEUIAHYAjYn4eBnw9j3n6crs/M7YMAunDrwLDQHWDp1MxqOk5JCe0kBlwOpOgs1CEl1KIPmGF0F6WGsBndLEiylRI0zw8bJbaAc+6iRDBz5YT/fAx3/cWCV6PUkBOCGzDogXo=,iv:KINWntYPHhGZ0vzYswTH4TvZ8rMQFZZfrW68Vv92ysQ=,tag:PV8Ty92ldjdINO66LmWxyw==,type:str]
+  encrypted_regex: ^(data|stringData)$
+  mac_only_encrypted: true
+  version: 3.12.1
