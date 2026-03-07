@@ -20,8 +20,7 @@ data:
     persistence_location /mosquitto/data
     persistence_file mosquitto.db
     autosave_interval 60
-    password_file /mosquitto/config/mosquitto.passwd
-    allow_anonymous false
+    allow_anonymous true
   mosquitto.passwd: |
     mqtt_user:$7$101$tXvYRVBe1Y+lrGyl$xVjG5ad+9q9T5psa05w4WQXJjkGmtCnSdZNfSp0pERGbqRocFYAsHG83yCf7a1+ajoLwMYS+Ytm18hOUr4lbxA==
     homeassistant:$7$101$swvtZGdP5/aRT++j$ve2tcwlfdvd9mfOmDf6DcVAMy7IkUkdlkWFqP7q8YmFPWcgHuDjDUx9Z/fHni3osFNZ0mh5uRno96V2WyFZNIA==
