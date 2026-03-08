@@ -15,7 +15,7 @@ spec:
       ref: repo
     - repoURL: mirror.gcr.io/envoyproxy
       chart: gateway-helm
-      targetRevision: v1.7.0
+      targetRevision: v1.6.0
       helm:
         releaseName: envoy-gateway
   destination:
@@ -41,3 +41,4 @@ spec:
       - ApplyOutOfSyncOnly=true
       - PruneLast=true
       - RespectIgnoreDifferences=true
+      - ForceApply=true
