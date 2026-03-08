@@ -15,6 +15,14 @@ spec:
   destination:
     name: in-cluster
     namespace: network
+  ignoreDifferences:
+    - kind: ConfigMap
+      name: envoy-gateway-config
+      namespace: network
+      jsonPointers:
+        - /metadata/labels
+        - /metadata/annotations
+        - /metadata/managedFields
   syncPolicy:
     automated:
       allowEmpty: true
