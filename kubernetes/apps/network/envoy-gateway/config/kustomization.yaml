@@ -8,6 +8,7 @@ generators:
 resources:
   - ./podmonitor.yaml
   - ./envoy-external-service.yaml
+  - ./envoy-gateway-config.yaml
 
 patchesJson6902:
   - target:
