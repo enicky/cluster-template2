@@ -9,15 +9,15 @@ metadata:
 spec:
   project: kubernetes
   sources:
-    - repoURL: "https://github.com/enicky/cluster-template2.git"
-      path: kubernetes/apps/network/envoy-gateway
-      targetRevision: main
-      ref: repo
     - repoURL: mirror.gcr.io/envoyproxy
       chart: gateway-helm
       targetRevision: v1.6.0
       helm:
         releaseName: envoy-gateway
+    - repoURL: "https://github.com/enicky/cluster-template2.git"
+      path: kubernetes/apps/network/envoy-gateway
+      targetRevision: main
+      ref: repo
   destination:
     name: in-cluster
     namespace: network
