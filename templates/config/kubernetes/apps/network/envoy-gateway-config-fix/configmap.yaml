@@ -9,15 +9,6 @@ data:
     kind: EnvoyGateway
     provider:
       type: Kubernetes
-    gateway:
-      controllerName: gateway.envoyproxy.io/gatewayclass-controller
-    extensionApis:
-      enableBackend: true
-    logging:
-      level:
-        default: info
-      management: null
-    provider:
       kubernetes:
         envoyDeployment:
           container:
@@ -45,3 +36,11 @@ data:
           - longhorn-system
           - monitoring
           - network
+    gateway:
+      controllerName: gateway.envoyproxy.io/gatewayclass-controller
+    extensionApis:
+      enableBackend: true
+    logging:
+      level:
+        default: info
+      management: null
