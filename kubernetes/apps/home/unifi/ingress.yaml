@@ -7,11 +7,13 @@ spec:
   parentRefs:
   - name: envoy-external
     namespace: network
+    sectionName: https
   hostnames:
   - unifi.gitlab.be
   rules:
   - backendRefs:
     - name: unifi-service
       port: 8443
+      protocol: HTTPS
 
 
