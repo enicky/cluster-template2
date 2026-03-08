@@ -12,8 +12,8 @@ spec:
   - unifi.gitlab.be
   rules:
   - backendRefs:
-    - name: unifi-service
-      port: 8443
-      protocol: HTTPS
+    - name: unifi-tls-backend
+      group: gateway.envoyproxy.io
+      kind: Backend
 
 

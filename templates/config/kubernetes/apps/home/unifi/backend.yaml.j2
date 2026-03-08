@@ -1,0 +1,12 @@
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: Backend
+metadata:
+  name: unifi-tls-backend
+  namespace: home
+spec:
+  endpoints:
+  - fqdn:
+      hostname: unifi-service.home.svc.cluster.local
+      port: #{ bootstrap_apps.unifi.port }#
+  tls:
+    insecureSkipVerify: true
