@@ -39,6 +39,7 @@ spec:
     syncOptions:
       - CreateNamespace=true
       - ApplyOutOfSyncOnly=true
+      - ServerSideApply=true
       - PruneLast=true
       - RespectIgnoreDifferences=true
       - ForceApply=true
