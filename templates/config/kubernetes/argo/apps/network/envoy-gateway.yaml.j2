@@ -14,11 +14,6 @@ spec:
       targetRevision: v1.6.0
       helm:
         releaseName: envoy-gateway
-        values: |
-          config:
-            envoyGateway:
-              extensionApis:
-                enableBackend: true
     - repoURL: "https://github.com/#{ repository_name }#.git"
       path: kubernetes/apps/network/envoy-gateway
       targetRevision: #{ repository_branch }#

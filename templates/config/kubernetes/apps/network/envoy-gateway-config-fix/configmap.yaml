@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: envoy-gateway-config
+  namespace: network
+data:
+  envoy-gateway.yaml: |
+    apiVersion: gateway.envoyproxy.io/v1alpha1
+    kind: EnvoyGateway
+    provider:
+      type: Kubernetes
+    gateway:
+      controllerName: gateway.envoyproxy.io/gatewayclass-controller
+    extensionApis:
+      enableBackend: true
+    logging:
+      level:
+        default: info
+      management: null
+    provider:
+      kubernetes:
+        envoyDeployment:
+          container:
+            env:
+            - name: GOGC
+              value: "80"
+            resources:
+              limits:
+                cpu: 2000m
+                memory: 1Gi
+              requests:
+                cpu: 100m
+                memory: 40Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
+              runAsUser: 65534
+        envoyService:
+          type: LoadBalancer
+        watch:
+          namespaces:
+          - home
+          - kube-system
+          - longhorn-system
+          - monitoring
+          - network

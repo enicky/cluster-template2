@@ -1,0 +1,33 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: envoy-gateway-config-fix
+  namespace: argo-system
+  annotations:
+    argocd.argoproj.io/sync-wave: '1'
+spec:
+  project: kubernetes
+  source:
+    repoURL: "https://github.com/enicky/cluster-template2.git"
+    path: kubernetes/apps/network/envoy-gateway-config-fix
+    targetRevision: main
+  destination:
+    name: in-cluster
+    namespace: network
+  syncPolicy:
+    automated:
+      allowEmpty: true
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 1
+      backoff:
+        duration: 10s
+        factor: 2
+        maxDuration: 3m
+    syncOptions:
+      - CreateNamespace=true
+      - ApplyOutOfSyncOnly=true
+      - ServerSideApply=true
+      - PruneLast=true
