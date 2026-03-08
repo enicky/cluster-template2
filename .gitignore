@@ -2,6 +2,8 @@
 *.pub
 *.key
 *.decrypted~*.yaml
+*.bak
+*.new
 /age.key
 /cloudflare-tunnel.json
 /github-deploy.key

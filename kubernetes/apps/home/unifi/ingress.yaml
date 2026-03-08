@@ -1,0 +1,17 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: unifi
+  namespace: home
+spec:
+  parentRefs:
+  - name: envoy-external
+    namespace: network
+  hostnames:
+  - unifi.gitlab.be
+  rules:
+  - backendRefs:
+    - name: unifi-service
+      port: 8443
+
+
