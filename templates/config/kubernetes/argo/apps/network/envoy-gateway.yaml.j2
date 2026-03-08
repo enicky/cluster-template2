@@ -25,6 +25,13 @@ spec:
     - kind: CustomResourceDefinition
       jqPathExpressions:
         - '.metadata.annotations."controller-gen.kubebuilder.io/version"'
+    - kind: ConfigMap
+      name: envoy-gateway-config
+      namespace: network
+      jsonPointers:
+        - /metadata/labels
+        - /metadata/annotations
+        - /metadata/managedFields
   syncPolicy:
     automated:
       allowEmpty: true
