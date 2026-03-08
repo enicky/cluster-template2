@@ -21,6 +21,10 @@ spec:
   destination:
     name: in-cluster
     namespace: network
+  ignoreDifferences:
+    - kind: CustomResourceDefinition
+      jqPathExpressions:
+        - '.metadata.annotations."controller-gen.kubebuilder.io/version"'
   syncPolicy:
     automated:
       allowEmpty: true
