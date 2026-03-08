@@ -8,3 +8,86 @@ generators:
 resources:
   - ./podmonitor.yaml
   - ./envoy-external-service.yaml
+
+patchesJson6902:
+  - target:
+      group: apiextensions.k8s.io
+      version: v1
+      kind: CustomResourceDefinition
+      name: httproutes.gateway.networking.k8s.io
+    patch: |-
+      - op: replace
+        path: /metadata/annotations
+        value: {}
+  - target:
+      group: apiextensions.k8s.io
+      version: v1
+      kind: CustomResourceDefinition
+      name: envoyproxies.gateway.envoyproxy.io
+    patch: |-
+      - op: replace
+        path: /metadata/annotations
+        value: {}
+  - target:
+      group: apiextensions.k8s.io
+      version: v1
+      kind: CustomResourceDefinition
+      name: gatewayclasses.gateway.networking.k8s.io
+    patch: |-
+      - op: replace
+        path: /metadata/annotations
+        value: {}
+  - target:
+      group: apiextensions.k8s.io
+      version: v1
+      kind: CustomResourceDefinition
+      name: gateways.gateway.networking.k8s.io
+    patch: |-
+      - op: replace
+        path: /metadata/annotations
+        value: {}
+  - target:
+      group: apiextensions.k8s.io
+      version: v1
+      kind: CustomResourceDefinition
+      name: grpcroutes.gateway.networking.k8s.io
+    patch: |-
+      - op: replace
+        path: /metadata/annotations
+        value: {}
+  - target:
+      group: apiextensions.k8s.io
+      version: v1
+      kind: CustomResourceDefinition
+      name: tcproutes.gateway.networking.k8s.io
+    patch: |-
+      - op: replace
+        path: /metadata/annotations
+        value: {}
+  - target:
+      group: apiextensions.k8s.io
+      version: v1
+      kind: CustomResourceDefinition
+      name: tlsroutes.gateway.networking.k8s.io
+    patch: |-
+      - op: replace
+        path: /metadata/annotations
+        value: {}
+  - target:
+      group: apiextensions.k8s.io
+      version: v1
+      kind: CustomResourceDefinition
+      name: udproutes.gateway.networking.k8s.io
+    patch: |-
+      - op: replace
+        path: /metadata/annotations
+        value: {}
+  - target:
+      group: apiextensions.k8s.io
+      version: v1
+      kind: CustomResourceDefinition
+      name: referencegrants.gateway.networking.k8s.io
+    patch: |-
+      - op: replace
+        path: /metadata/annotations
+        value: {}
