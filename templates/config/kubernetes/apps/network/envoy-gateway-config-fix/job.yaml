@@ -15,4 +15,4 @@ spec:
         command:
         - sh
         - -c
-        - kubectl delete pod -n network -l app.kubernetes.io/name=envoy-gateway --all
+        - kubectl delete pod -n network -l app.kubernetes.io/name=envoy-gateway
