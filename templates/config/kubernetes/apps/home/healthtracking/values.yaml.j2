@@ -28,7 +28,7 @@ controllers:
             custom: true
             spec:
               httpGet:
-                path: /health
+                path:  /health/live
                 port: 5001
               initialDelaySeconds: 30
               periodSeconds: 10
@@ -39,7 +39,7 @@ controllers:
             custom: true
             spec:
               httpGet:
-                path: /health
+                path: /health/ready
                 port: 5001
               initialDelaySeconds: 10
               periodSeconds: 5
