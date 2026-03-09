@@ -26,6 +26,9 @@ spec:
       backendRefs:
         - name: healthtracking-backend
           port: 5001
+      timeouts:
+        request: 120s
+        backendRequest: 120s
     # Frontend route - matches all other paths
     - backendRefs:
         - name: healthtracking-frontend
