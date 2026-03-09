@@ -30,8 +30,14 @@ spec:
         app.kubernetes.io/name: healthtracking-postgres
     spec:
       securityContext:
-        fsGroup: 999
-        fsGroupChangePolicy: OnRootMismatch
+        fsGroup: 0
+      initContainers:
+        - name: init-cleanup
+          image: busybox:latest
+          command: ['sh', '-c', 'rm -rf /var/lib/postgresql/data/lost+found || true']
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
       containers:
         - name: postgres
           image: postgres:16-alpine
@@ -78,9 +84,8 @@ spec:
               cpu: 500m
               memory: 512Mi
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop: ["ALL"]
+            allowPrivilegeEscalation: true
+            runAsUser: 0
           volumeMounts:
             - name: data
               mountPath: /var/lib/postgresql/data
