@@ -20,7 +20,6 @@ spec:
         releaseName: healthtracking
         valueFiles:
           - $repo/kubernetes/apps/home/healthtracking/values.yaml
-          - $repo/kubernetes/apps/home/healthtracking/values.sops.yaml
   destination:
     name: in-cluster
     namespace: home
@@ -36,8 +35,4 @@ spec:
         factor: 2
         maxDuration: 3m
     syncOptions:
-      - CreateNamespace=true
-      - ApplyOutOfSyncOnly=true
-      - ServerSideApply=true
-      - PruneLast=true
-      - RespectIgnoreDifferences=true
+    - CreateNamespace=true

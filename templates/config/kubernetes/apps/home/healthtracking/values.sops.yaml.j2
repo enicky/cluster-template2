@@ -1,6 +1,5 @@
 ---
-# This file should be encrypted with SOPS
-# Add your database password here after creating this file
-# Run: sops kubernetes/apps/home/healthtracking/values.sops.yaml
+# This file should be encrypted with SOPS after rendering
+# The password is sourced from bootstrap-apps.yaml (which is not checked in)
 env:
-  DB_PASSWORD: "ENC[AES256_GCM,data:your_secure_password_here,iv:...,tag:...,type:str]"
+  DB_PASSWORD: #{ bootstrap_apps.healthtracking.database.password }#

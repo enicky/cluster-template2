@@ -1,21 +1,20 @@
-# This file should be encrypted with SOPS
-# Add your database password here after creating this file
-# Run: sops kubernetes/apps/home/healthtracking/values.sops.yaml
+# This file should be encrypted with SOPS after rendering
+# The password is sourced from bootstrap-apps.yaml (which is not checked in)
 env:
-  DB_PASSWORD: ENC[AES256_GCM,data:your_secure_password_here,iv:...,tag:...,type:str]
+  DB_PASSWORD: your-secure-database-password-here
 sops:
   age:
     - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
       enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBtNVB2eW9nTHZtN0R0eDRr
-        TnNPaXJobnhCM2xHTkN0aDR0MC9pNVBMUFNvCmQrRlBrT1g4RlA1ZDZNdXFOZUxR
-        NmtqNm40VU5GZjluZ3FUbE5yaFd3N2sKLS0tIDFTSmx3YkZ5bVh1czZXVWt4aUxC
-        Z3Z4NWMvUHJrS1VWckNXZ29TNW96RGsKObCXz0gpba5b9acw/5Fvi7eyFIhIxweN
-        gHHp7HKPiJMMN8hND5FT685u6+qCbU1sspgSF5TSPT/zlF1mosR8nw==
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB6a1FwcDJvU1QyREtKOUlL
+        dk9BYTVLUHN2K3c4K0JGdHJPU1RRVWYvczNNCnc3MXVOc0FtbnY1YmFXV2JDMEho
+        cWgvQWRxcjVPVUw4MEZxUVFqWTBVcGsKLS0tIHNzak5wZlZTQXg2WWJiSStWOTlV
+        ZlR5UW5LK1VQcWhWZFFOeHkvajNZNHMKNCutlCPYyWilmoiZ2AFwVFtCmwaz6r5n
+        Ig64OdnPlI42tV7MS6LFeIAEVHFkVe+qddhsXFGcLnPjAu1zJsY+zA==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2026-03-09T14:25:00Z"
-  mac: ENC[AES256_GCM,data:Kp8KnJAG5I/ej9QkxH9gKl/AYlEdmVBfcBePazUyyADht56GDb7ECpTc0IXjAsMHU0ceP4f2umn/SIi81MNIDbJE7bl8ok0g8D//Ax+PZY4UUvBZFWmJ/zZTVDehqX3I2CZvYLBh1gObf6JdE0sm4ZyqpWnYeJGiHZIAdmqwXcA=,iv:idWiRFLCkkmRWG8r+1SzqGKVBMW1f1JUhclcgvI4jEY=,tag:ELdOKlUm4udTIu71OVklNA==,type:str]
+  lastmodified: "2026-03-09T14:39:08Z"
+  mac: ENC[AES256_GCM,data:LIBJhG3Xa7z13N29hhh/m5EPSj5O4m9TVspeZ2h5ZYqlNBO1HdxTebExGhDEEowHxvgm1u5A8POzPzGWtw0AC3v0eVlDIiVZwXL2NSuAOMrXEYpP+rDp5x9CTxKr5Vg0+dGjsZhzea6F0euLpbmkptlqspCYfr5qRSITJ9nbjYY=,iv:4JhJyzgKOsFtpvD9KKbcK6Eo/Jfx2tnBJ7bd0Yv4KV8=,tag:JCer4IUmRA6Iz+rdLIYm2A==,type:str]
   encrypted_regex: ^(data|stringData)$
   mac_only_encrypted: true
   version: 3.12.1
