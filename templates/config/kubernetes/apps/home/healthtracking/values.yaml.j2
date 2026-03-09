@@ -9,6 +9,10 @@ controllers:
         env:
           ASPNETCORE_URLS: http://+:5000
           ASPNETCORE_ENVIRONMENT: Production
+          DB_HOST: healthtracking-postgres
+          DB_PORT: "5432"
+          DB_NAME: #{ bootstrap_apps.healthtracking.database.name }#
+          DB_USER: #{ bootstrap_apps.healthtracking.database.user }#
           ConnectionStrings__DefaultConnection: "Host=healthtracking-postgres;Port=5432;Database=#{ bootstrap_apps.healthtracking.database.name }#;Username=#{ bootstrap_apps.healthtracking.database.user }#;Password=$(DB_PASSWORD)"
           Logging__LogLevel__Default: Information
         envFrom:
