@@ -65,7 +65,7 @@ controllers:
           tag: main-536bd69
         env:
           NODE_ENV: production
-          VITE_API_URL: https://health.gitlab.be/api
+          VITE_API_URL: https://health.gitlab.be
         ports:
           - name: http
             containerPort: 3000
