@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - http-routes.yaml
   - secret.sops.yaml
+  - postgres-statefulset.yaml
