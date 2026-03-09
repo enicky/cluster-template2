@@ -1,0 +1,198 @@
+controllers:
+  backend:
+    strategy: RollingUpdate
+    containers:
+      app:
+        image:
+          repository: ghcr.io/enicky/health-api
+          tag: main-354b8e9
+        env:
+          ASPNETCORE_URLS: http://+:5000
+          ASPNETCORE_ENVIRONMENT: Production
+          ConnectionStrings__DefaultConnection: "Host=localhost;Port=5432;Database=healthtracking;Username=healthtracking;Password=$(DB_PASSWORD)"
+          Logging__LogLevel__Default: Information
+        envFrom:
+          - secretRef:
+              name: healthtracking-db
+        ports:
+          - name: http
+            containerPort: 5000
+            protocol: TCP
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /health
+                port: 5000
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              timeoutSeconds: 5
+              failureThreshold: 3
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /health
+                port: 5000
+              initialDelaySeconds: 10
+              periodSeconds: 5
+              timeoutSeconds: 3
+              failureThreshold: 3
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: { drop: ["ALL"] }
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+
+  frontend:
+    strategy: RollingUpdate
+    containers:
+      app:
+        image:
+          repository: ghcr.io/enicky/health-frontend
+          tag: main-354b8e9
+        env:
+          NODE_ENV: production
+          VITE_API_URL: https://health.gitlab.be/api
+        ports:
+          - name: http
+            containerPort: 5173
+            protocol: TCP
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /
+                port: 5173
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              timeoutSeconds: 5
+              failureThreshold: 3
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              httpGet:
+                path: /
+                port: 5173
+              initialDelaySeconds: 10
+              periodSeconds: 5
+              timeoutSeconds: 3
+              failureThreshold: 3
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: { drop: ["ALL"] }
+          readOnlyRootFilesystem: false
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            cpu: 200m
+            memory: 256Mi
+
+  postgres:
+    type: statefulset
+    strategy: RollingUpdate
+    replicas: 1
+    containers:
+      app:
+        image:
+          repository: postgres
+          tag: "16-alpine"
+        env:
+          POSTGRES_DB: healthtracking
+          POSTGRES_USER: healthtracking
+          POSTGRES_PASSWORD: $(DB_PASSWORD)
+        envFrom:
+          - secretRef:
+              name: healthtracking-db
+        ports:
+          - name: postgres
+            containerPort: 5432
+            protocol: TCP
+        probes:
+          liveness:
+            enabled: true
+            custom: true
+            spec:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - pg_isready -U healthtracking
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              timeoutSeconds: 5
+              failureThreshold: 3
+          readiness:
+            enabled: true
+            custom: true
+            spec:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - pg_isready -U healthtracking
+              initialDelaySeconds: 10
+              periodSeconds: 5
+              timeoutSeconds: 3
+              failureThreshold: 3
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: { drop: ["ALL"] }
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        volumeMounts:
+          - name: data
+            mountPath: /var/lib/postgresql/data
+            subPath: postgres
+
+    persistence:
+      data:
+        enabled: true
+        type: pvc
+        accessMode: ReadWriteOnce
+        size: 10Gi
+
+defaultPodOptions:
+  securityContext:
+    runAsNonRoot: false
+    fsGroup: 999
+
+service:
+  backend:
+    controller: backend
+    ports:
+      http:
+        port: 5000
+        targetPort: 5000
+
+  frontend:
+    controller: frontend
+    ports:
+      http:
+        port: 5173
+        targetPort: 5173
+
+  postgres:
+    controller: postgres
+    ports:
+      postgres:
+        port: 5432
+        targetPort: 5432

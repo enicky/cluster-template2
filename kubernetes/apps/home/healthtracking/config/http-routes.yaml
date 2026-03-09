@@ -1,0 +1,26 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: healthtracking-frontend
+  namespace: home
+spec:
+  parentRefs:
+    - name: envoy-external
+      namespace: network
+      sectionName: https
+  hostnames:
+    - health.gitlab.be
+  rules:
+    # API backend route - matches /api and /api/*
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api
+      backendRefs:
+        - name: healthtracking-backend
+          port: 5000
+    # Frontend route - matches all other paths
+    - backendRefs:
+        - name: healthtracking-frontend
+          port: 5173
