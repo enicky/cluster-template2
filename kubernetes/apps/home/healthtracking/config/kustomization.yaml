@@ -4,3 +4,11 @@ resources:
   - http-routes.yaml
   - secret.sops.yaml
   - postgres-statefulset.yaml
+
+patches:
+  - target:
+      kind: Secret
+      name: healthtracking-db
+    patch: |-
+      - op: remove
+        path: /sops
