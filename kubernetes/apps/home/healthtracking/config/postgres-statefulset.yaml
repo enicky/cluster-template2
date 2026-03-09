@@ -83,13 +83,13 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /var/lib/postgresql/data
-              subPath: postgres
   volumeClaimTemplates:
     - metadata:
         name: data
       spec:
         accessModes:
           - ReadWriteOnce
+        storageClassName: longhorn
         resources:
           requests:
-            storage: 10Gi
+            storage: 20Gi
