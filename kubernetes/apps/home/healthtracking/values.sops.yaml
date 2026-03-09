@@ -1,20 +1,20 @@
 # This file should be encrypted with SOPS after rendering
 # The password is sourced from bootstrap-apps.yaml (which is not checked in)
 env:
-  DB_PASSWORD: your-secure-database-password-here
+  DB_PASSWORD: PostgreSQL-HTk47jMn9Qp2vL8xK
 sops:
   age:
     - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
       enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB0S2QyalZ3YWFsUTR6dUVW
-        d0ZOSWtCY1JDVzZhNXhuQVR1MG16RlhVV3lVCk1pUFd0YlZzQmpTQ0RicVYveE5Y
-        dklzdzBtdnZLUHI3ZDNQMFc2bFh4ZDAKLS0tIFV4V2tFZU1CVTJrbnNURjV6QUFZ
-        YU9lVnNBV0tXU2Z4dVU1cmE4NXp1aUEKDLJPMcQz63gXuqHOn2SSiTnzjK90nbir
-        Y5qZuVw1D+FXYv3vQvLxt5i9fWHbIZyJRTiYuQG/LJEavmyeAXov4w==
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBQMkxWYjlPSEF4TUlxQWFs
+        TXZHMTR2N1A2VCs1VlN6UlJpZUxYS2FtWXhnClFHdk5FM1YydXJGNGk4YXV2MGRO
+        U1p4Wk1QSW9oeWFIVGdrdFZTdTlkQXMKLS0tIG55YnNZQk14bnlyd0h0RWlsS2wx
+        R3paSkt5WjFLaVpUSFhqcFhBa1NnQzAKEPoNBc0IAlAEjRlCDKtr/FZBMtIxsepf
+        2tIRFT3JI/b4Qo45nTy76gYI2uGIe7m8T86CrHPGV4bNGO0ot3rX6Q==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2026-03-09T17:27:26Z"
-  mac: ENC[AES256_GCM,data:VeDpnpAbDebE1evSt4Vh04BNs8zd86hJnfXUyWR+hwHXumFbwpEj43dy7E9aNGQt4l1YJN8E/Z0cP0Mms0B6dwlBMArBXd1cd8HcROeUPnNqfP3OntvTHFyJiGGV09S68+D0w/kSReBKd3ZSe/Ls/WPByURNkSnUsRLCEIUIjOI=,iv:3jKAWeCIdTT8Kqaamf1cpO/YSMYrwAgX9ftQGXGbjho=,tag:FT+KgG4oUz5y1rGjmXk44Q==,type:str]
+  lastmodified: "2026-03-09T17:48:36Z"
+  mac: ENC[AES256_GCM,data:romc3yl41QSSb6RY2rdPD2AwiWktgeS3NFAWikn1w01ps1KycBAcEd0H5MJBbJVgc+WhM/rEBX14koqY/wVDmBGnrOW2/Me+Qkf1m60Jv/fnpOKTBIzopVuLiJPzD+VksC0mBFnphC9qam4lf5K+tcDquu6Ol70JrYLo1Qkz02k=,iv:JCCNKpHYqRrsv/ak/pRkjHpvHuA+ZMRGdgkH6OWWnjc=,tag:IHkiPCH78zbtTGTIhD6srA==,type:str]
   encrypted_regex: ^(data|stringData)$
   mac_only_encrypted: true
   version: 3.12.1

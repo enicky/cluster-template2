@@ -7,8 +7,8 @@ controllers:
           repository: #{ bootstrap_apps.healthtracking.backend.image.split(':')[0] }#
           tag: #{ bootstrap_apps.healthtracking.backend.image.split(':')[1] }#
         env:
-          ASPNETCORE_URLS: http://+:5000
-          ASPNETCORE_ENVIRONMENT: Production
+          ASPNETCORE_URLS: http://+:5001
+          ASPNETCORE_ENVIRONMENT: Development
           DB_HOST: healthtracking-postgres
           DB_PORT: "5432"
           DB_NAME: #{ bootstrap_apps.healthtracking.database.name }#
@@ -20,7 +20,7 @@ controllers:
               name: healthtracking-db
         ports:
           - name: http
-            containerPort: 5000
+            containerPort: 5001
             protocol: TCP
         probes:
           liveness:
@@ -29,7 +29,7 @@ controllers:
             spec:
               httpGet:
                 path: /health
-                port: 5000
+                port: 5001
               initialDelaySeconds: 30
               periodSeconds: 10
               timeoutSeconds: 5
@@ -40,7 +40,7 @@ controllers:
             spec:
               httpGet:
                 path: /health
-                port: 5000
+                port: 5001
               initialDelaySeconds: 10
               periodSeconds: 5
               timeoutSeconds: 3
@@ -115,8 +115,8 @@ service:
     controller: backend
     ports:
       http:
-        port: 5000
-        targetPort: 5000
+        port: 5001
+        targetPort: 5001
 
   frontend:
     controller: frontend
