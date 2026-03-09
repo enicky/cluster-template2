@@ -65,7 +65,7 @@ controllers:
           tag: #{ bootstrap_apps.healthtracking.frontend.image.split(':')[1] }#
         env:
           NODE_ENV: production
-          VITE_API_URL: https://health.#{ cloudflare_domain }#
+          VITE_API_URL: https://health.#{ cloudflare_domain }#/api
         ports:
           - name: http
             containerPort: 3000
