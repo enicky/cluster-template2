@@ -5,7 +5,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/enicky/health-api
-          tag: main-0b519e6
+          tag: main-f04e76c
         env:
           ASPNETCORE_URLS: http://+:5001
           ASPNETCORE_ENVIRONMENT: Development
@@ -62,7 +62,7 @@ controllers:
       app:
         image:
           repository: ghcr.io/enicky/health-frontend
-          tag: main-0b519e6
+          tag: main-f04e76c
         env:
           NODE_ENV: production
           VITE_API_URL: https://health.gitlab.be/api
