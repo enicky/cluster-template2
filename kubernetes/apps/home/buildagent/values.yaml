@@ -4,17 +4,17 @@ deployment:
   name: buildagent
   namespace: home
   replicas: 1
-  
+
   container:
     image: mcr.microsoft.com/azure-pipelines/vsts-agent:latest-ubuntu-22.04
     imagePullPolicy: IfNotPresent
-    
+
     env:
       AZP_URL: https://dev.azure.com/Cegeka-Engineering-Studio
       AZP_POOL: ImmersiveRoom-Jetson-Staging-Agents
       AZP_AGENT_NAME: k8s-agent-1
       # AZP_TOKEN will be loaded from secret
-    
+
     resources:
       requests:
         cpu: 500m
@@ -22,7 +22,7 @@ deployment:
       limits:
         cpu: 2000m
         memory: 2Gi
-    
+
     securityContext:
       allowPrivilegeEscalation: false
       runAsUser: 0

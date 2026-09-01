@@ -14,8 +14,6 @@ spec:
         app: buildagent
     spec:
       serviceAccountName: buildagent
-      securityContext:
-        fsGroup: 0
       containers:
         - name: buildagent
           image: neichmann/buildagent:arm64
@@ -39,9 +37,6 @@ spec:
             limits:
               cpu: 2000m
               memory: 2Gi
-          securityContext:
-            allowPrivilegeEscalation: false
-            runAsUser: 0
           volumeMounts:
             - name: docker
               mountPath: /var/run/docker.sock
