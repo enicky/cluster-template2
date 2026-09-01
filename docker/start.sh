@@ -2,6 +2,8 @@
 set -e
 
 echo "=== Azure Pipelines Agent Startup ==="
+echo "Running as user: $(whoami) (UID: $(id -u))"
+echo "Groups: $(id -G)"
 
 # Check required environment variables
 if [ -z "$AZP_URL" ]; then
