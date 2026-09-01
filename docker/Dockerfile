@@ -25,7 +25,7 @@ RUN curl -L https://download.agent.dev.azure.com/agent/5.279.0/vsts-agent-linux-
 
 # Fix ALL permissions - ensure agentuser owns everything and can write
 RUN chown -R agentuser:agentuser /home/agentuser && \
-    chmod -R u+rwX,g-rwx,o-rwx /home/agentuser
+    chmod -R 777 /home/agentuser
 
 # Copy startup script and set permissions
 COPY start.sh /home/agentuser/start.sh
