@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: buildagent
+  namespace: home
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: buildagent
+  template:
+    metadata:
+      labels:
+        app: buildagent
+    spec:
+      serviceAccountName: buildagent
+      securityContext:
+        fsGroup: 0
+      containers:
+        - name: buildagent
+          image: neichmann/buildagent:arm64
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: AZP_URL
+              value: #{ bootstrap_apps.buildagent.organization_url }#
+            - name: AZP_POOL
+              value: #{ bootstrap_apps.buildagent.agent_pool }#
+            - name: AZP_AGENT_NAME
+              value: #{ bootstrap_apps.buildagent.agent_name }#
+            - name: AZP_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: buildagent-token
+                  key: AZP_TOKEN
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+            limits:
+              cpu: 2000m
+              memory: 2Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 0
+          volumeMounts:
+            - name: docker
+              mountPath: /var/run/docker.sock
+      volumes:
+        - name: docker
+          hostPath:
+            path: /var/run/docker.sock
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: buildagent
+  namespace: home
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: buildagent
+  namespace: home
+spec:
+  selector:
+    app: buildagent
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  type: ClusterIP

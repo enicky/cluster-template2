@@ -1,0 +1,28 @@
+---
+# Azure DevOps Build Agent configuration
+deployment:
+  name: buildagent
+  namespace: home
+  replicas: 1
+  
+  container:
+    image: mcr.microsoft.com/azure-pipelines/vsts-agent:latest-ubuntu-22.04
+    imagePullPolicy: IfNotPresent
+    
+    env:
+      AZP_URL: #{ bootstrap_apps.buildagent.organization_url }#
+      AZP_POOL: #{ bootstrap_apps.buildagent.agent_pool }#
+      AZP_AGENT_NAME: #{ bootstrap_apps.buildagent.agent_name }#
+      # AZP_TOKEN will be loaded from secret
+    
+    resources:
+      requests:
+        cpu: 500m
+        memory: 512Mi
+      limits:
+        cpu: 2000m
+        memory: 2Gi
+    
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsUser: 0
