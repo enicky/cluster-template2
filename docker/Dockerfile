@@ -1,6 +1,6 @@
 FROM arm64v8/ubuntu:22.04
 
-# Install required dependencies and download agent in one layer to avoid duplication
+# Install required dependencies
 RUN apt-get update && apt-get install -y \
     curl \
     git \
@@ -10,28 +10,30 @@ RUN apt-get update && apt-get install -y \
     libssl3 \
     zlib1g \
     ca-certificates \
-    && rm -rf /var/lib/apt/lists/* && \
-    useradd -m -s /bin/bash agentuser && \
-    mkdir -p /home/agentuser/agent && \
-    chown -R agentuser:agentuser /home/agentuser/agent && \
-    cd /home/agentuser/agent && \
-    curl -L https://download.agent.dev.azure.com/agent/5.279.0/vsts-agent-linux-arm64-5.279.0.tar.gz | tar xz && \
-    chown -R agentuser:agentuser /home/agentuser/agent && \
-    chmod -R u+w /home/agentuser/agent && \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create agent user (will have UID 1000)
+RUN useradd -m -s /bin/bash agentuser
+
+# Download and extract agent as root, then fix permissions
+WORKDIR /home/agentuser/agent
+RUN curl -L https://download.agent.dev.azure.com/agent/5.279.0/vsts-agent-linux-arm64-5.279.0.tar.gz | tar xz && \
     if [ -f /home/agentuser/agent/bin/installdependencies.sh ]; then \
       /home/agentuser/agent/bin/installdependencies.sh || true; \
     fi && \
-    chown -R agentuser:agentuser /home/agentuser/agent && \
-    chmod -R u+w /home/agentuser/agent && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy startup script
-COPY --chown=agentuser:agentuser start.sh /home/agentuser/start.sh
-RUN chmod +x /home/agentuser/start.sh
+# Fix ALL permissions - ensure agentuser owns everything and can write
+RUN chown -R agentuser:agentuser /home/agentuser && \
+    chmod -R u+rwX,g-rwx,o-rwx /home/agentuser
+
+# Copy startup script and set permissions
+COPY start.sh /home/agentuser/start.sh
+RUN chown agentuser:agentuser /home/agentuser/start.sh && \
+    chmod 755 /home/agentuser/start.sh
 
 # Run as agentuser
 USER agentuser
-WORKDIR /home/agentuser/agent
 
 # Startup script handles agent configuration and running
 ENTRYPOINT ["/home/agentuser/start.sh"]

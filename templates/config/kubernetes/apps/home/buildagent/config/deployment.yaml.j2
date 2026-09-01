@@ -14,6 +14,10 @@ spec:
         app: buildagent
     spec:
       serviceAccountName: buildagent
+      securityContext:
+        runAsUser: 1000
+        runAsNonRoot: true
+        fsGroup: 1000
       containers:
         - name: buildagent
           image: neichmann/buildagent:arm64
