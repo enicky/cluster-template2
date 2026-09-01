@@ -5,6 +5,8 @@ metadata:
   namespace: home
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: buildagent
@@ -20,7 +22,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: buildagent
-          image: neichmann/buildagent:arm64-20260901173219
+          image: neichmann/buildagent:arm64-20260901211724
           imagePullPolicy: Always
           env:
             - name: AZP_URL
@@ -44,10 +46,28 @@ spec:
           volumeMounts:
             - name: docker
               mountPath: /var/run/docker.sock
+            - name: agent-data
+              mountPath: /home/agentuser/agent
       volumes:
         - name: docker
           hostPath:
             path: /var/run/docker.sock
+        - name: agent-data
+          persistentVolumeClaim:
+            claimName: buildagent-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: buildagent-data
+  namespace: home
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 20Gi
 ---
 apiVersion: v1
 kind: ServiceAccount

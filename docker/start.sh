@@ -27,10 +27,17 @@ echo "  Pool: $AZP_POOL"
 echo "  Agent Name: $AZP_AGENT_NAME"
 echo "  Work Directory: $AZP_WORK"
 
+# Seed the persistent volume with the agent binaries on first boot
+# (the PVC is empty initially and would otherwise hide the image contents)
+if [ ! -f /home/agentuser/agent/config.sh ]; then
+  echo "Seeding persistent agent directory from image..."
+  cp -a /opt/agent-seed/. /home/agentuser/agent/
+fi
+
 # Navigate to agent directory
 cd /home/agentuser/agent
 
-# Check if already configured
+# Check if already configured (persisted across restarts via the volume)
 if [ ! -f /home/agentuser/agent/.agent ]; then
   echo "Configuring agent..."
   ./config.sh \
@@ -42,6 +49,8 @@ if [ ! -f /home/agentuser/agent/.agent ]; then
     --agent "$AZP_AGENT_NAME" \
     --work "$AZP_WORK" \
     --acceptTeeEula
+else
+  echo "Agent already configured, reusing existing registration."
 fi
 
 echo "Starting agent..."
