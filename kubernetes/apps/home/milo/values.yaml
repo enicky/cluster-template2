@@ -1,0 +1,95 @@
+---
+# Milo Application Configuration
+# Whisper Transcription service with PostgreSQL backend
+
+namespace: milo
+namePrefix: milo-
+
+# Application configuration
+app:
+  name: whisper-transcription
+  replicas: 2
+  
+# Container image
+image:
+  repository: your-registry.azurecr.io/whisper-transcription-rk1
+  tag: latest
+  pullPolicy: IfNotPresent
+
+# Environment configuration
+env:
+  LOG_LEVEL: "INFO"
+  CORS_ORIGINS: "http://localhost:3000,http://localhost:8000"
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 8000
+  targetPort: 8000
+
+# Database configuration
+database:
+  host: milo-postgres
+  port: 5432
+  name: transcription
+  user: transcriber
+
+# Ingress configuration (if needed)
+ingress:
+  enabled: false
+
+# Resource limits
+resources:
+  app:
+    requests:
+      memory: "512Mi"
+      cpu: "500m"
+    limits:
+      memory: "2Gi"
+      cpu: "2000m"
+  postgres:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+
+# Storage configuration
+storage:
+  recordings:
+    size: 20Gi
+  logs:
+    size: 5Gi
+  postgres:
+    size: 30Gi
+
+# Health probes
+probes:
+  liveness:
+    initialDelaySeconds: 40
+    periodSeconds: 30
+    timeoutSeconds: 10
+    failureThreshold: 3
+  readiness:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 2
+  startup:
+    initialDelaySeconds: 0
+    periodSeconds: 5
+    timeoutSeconds: 5
+    failureThreshold: 30
+
+# Pod disruption and scaling
+hpa:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 6
+  cpuUtilization: 70
+  memoryUtilization: 80
+
+# Network policies
+networkPolicy:
+  enabled: true

@@ -1,0 +1,19 @@
+---
+# Encrypted database secrets for Milo
+# Edit with: sops templates/config/kubernetes/apps/home/milo/values.sops.yaml.j2
+
+postgres-user: ENC[AES256_GCM,data:...,iv:...,tag:...]
+postgres-password: ENC[AES256_GCM,data:...,iv:...,tag:...]
+postgres-db: ENC[AES256_GCM,data:...,iv:...,tag:...]
+
+sops:
+  kms: []
+  gcp_kms: []
+  azure_kv: []
+  hc_vault: []
+  age: []
+  lastmodified: '2026-09-02T00:00:00Z'
+  mac: ENC[AES256_GCM,data:...,iv:...,tag:...]
+  pgp: []
+  unencrypted_suffix: _unencrypted
+  version: 3.7.3

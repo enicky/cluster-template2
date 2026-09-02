@@ -1,0 +1,156 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whisper-transcription
+  namespace: milo
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0  # Zero-downtime updates
+  selector:
+    matchLabels:
+      app: whisper-transcription
+  template:
+    metadata:
+      labels:
+        app: whisper-transcription
+        version: v1
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      # Distribute pods across nodes
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - whisper-transcription
+                topologyKey: kubernetes.io/hostname
+      
+      # DNS policy for Talos
+      dnsPolicy: ClusterFirst
+      
+      # Grace period for graceful shutdown
+      terminationGracePeriodSeconds: 45
+      
+      # Service account
+      serviceAccountName: whisper-sa
+      
+      # Pod security context
+      securityContext:
+        fsGroup: 1000
+      
+      containers:
+        - name: whisper-transcription
+          image: your-registry.azurecr.io/whisper-transcription-rk1:latest
+          imagePullPolicy: IfNotPresent
+          
+          ports:
+            - containerPort: 8000
+              name: api
+              protocol: TCP
+          
+          env:
+            # Database connection
+            - name: DATABASE_URL
+              value: "postgresql://transcriber:CHANGE_ME_SECURE_PASSWORD@postgres:5432/transcription"
+            
+            # Application configuration
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: whisper-env-config
+                  key: LOG_LEVEL
+            - name: CORS_ORIGINS
+              valueFrom:
+                configMapKeyRef:
+                  name: whisper-env-config
+                  key: CORS_ORIGINS
+            
+            # Kubernetes-specific variables
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          
+          volumeMounts:
+            - name: recordings
+              mountPath: /app/recordings
+            - name: logs
+              mountPath: /app/logs
+          
+          # Liveness probe
+          livenessProbe:
+            httpGet:
+              path: /api/healthz
+              port: 8000
+            initialDelaySeconds: 40
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+          
+          # Readiness probe
+          readinessProbe:
+            httpGet:
+              path: /api/healthz
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 2
+          
+          # Startup probe
+          startupProbe:
+            httpGet:
+              path: /api/healthz
+              port: 8000
+            initialDelaySeconds: 0
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 30  # 150 seconds total
+          
+          # Resource limits
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "2Gi"
+              cpu: "2000m"
+          
+          # Security context
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            capabilities:
+              drop:
+                - ALL
+      
+      volumes:
+        - name: recordings
+          persistentVolumeClaim:
+            claimName: whisper-recordings-pvc
+        - name: logs
+          persistentVolumeClaim:
+            claimName: whisper-logs-pvc
