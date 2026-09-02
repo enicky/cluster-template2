@@ -23,7 +23,7 @@ fullnameOverride: ""
 # This is for setting Kubernetes Annotations to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 podAnnotations: {
-   lbipam.cilium.io/ips: "192.168.1.26"
+   lbipam.cilium.io/ips: "#{ bootstrap_apps.mqtt.loadbalancer_ip }#"
   }
 # This is for setting Kubernetes Labels to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/

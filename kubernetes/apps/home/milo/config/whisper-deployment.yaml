@@ -62,9 +62,14 @@ spec:
               protocol: TCP
           
           env:
-            # Database connection
+            # Database connection (password from secret)
             - name: DATABASE_URL
-              value: "postgresql://transcriber:CHANGE_ME_SECURE_PASSWORD@postgres:5432/transcription"
+              value: "postgresql://transcriber:$(POSTGRES_PASSWORD)@postgres:5432/transcription"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: whisper-db-secret
+                  key: postgres-password
             
             # Application configuration
             - name: LOG_LEVEL

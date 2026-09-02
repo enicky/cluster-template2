@@ -1,6 +1,6 @@
 ingress:
   enabled: true
-  host: longhorn2.gitlab.be
+  host: #{ bootstrap_apps.longhorn.ingress.host }#
   ingressClassName: "internal"
 
 service:

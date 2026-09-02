@@ -5,5 +5,5 @@ metadata:
   name: whisper-env-config
   namespace: milo
 data:
-  LOG_LEVEL: "INFO"
-  CORS_ORIGINS: "http://localhost:3000,http://localhost:8000"
+  LOG_LEVEL: "#{ bootstrap_apps.milo.log_level }#"
+  CORS_ORIGINS: "#{ bootstrap_apps.milo.cors_origins }#"

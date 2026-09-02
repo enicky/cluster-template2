@@ -53,7 +53,7 @@ spec:
       
       containers:
         - name: whisper-transcription
-          image: your-registry.azurecr.io/whisper-transcription-rk1:latest
+          image: #{ bootstrap_apps.milo.image }#
           imagePullPolicy: IfNotPresent
           
           ports:
@@ -62,9 +62,14 @@ spec:
               protocol: TCP
           
           env:
-            # Database connection
+            # Database connection (password from secret)
             - name: DATABASE_URL
-              value: "postgresql://transcriber:CHANGE_ME_SECURE_PASSWORD@postgres:5432/transcription"
+              value: "postgresql://#{ bootstrap_apps.milo.database.user }#:$(POSTGRES_PASSWORD)@postgres:5432/#{ bootstrap_apps.milo.database.name }#"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: whisper-db-secret
+                  key: postgres-password
             
             # Application configuration
             - name: LOG_LEVEL

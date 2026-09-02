@@ -1,6 +1,7 @@
 ---
 # Milo Application Configuration
 # Whisper Transcription service with PostgreSQL backend
+# Configuration comes from bootstrap-apps.yaml
 
 namespace: milo
 namePrefix: milo-
@@ -10,16 +11,16 @@ app:
   name: whisper-transcription
   replicas: 2
   
-# Container image
+# Container image (from bootstrap config)
 image:
-  repository: your-registry.azurecr.io/whisper-transcription-rk1
-  tag: latest
+  repository: #{ bootstrap_apps.milo.image.split(':')[0] }#
+  tag: #{ bootstrap_apps.milo.image.split(':')[1] }#
   pullPolicy: IfNotPresent
 
 # Environment configuration
 env:
-  LOG_LEVEL: "INFO"
-  CORS_ORIGINS: "http://localhost:3000,http://localhost:8000"
+  LOG_LEVEL: "#{ bootstrap_apps.milo.log_level }#"
+  CORS_ORIGINS: "#{ bootstrap_apps.milo.cors_origins }#"
 
 # Service configuration
 service:
@@ -27,12 +28,12 @@ service:
   port: 8000
   targetPort: 8000
 
-# Database configuration
+# Database configuration (from bootstrap config)
 database:
   host: milo-postgres
   port: 5432
-  name: transcription
-  user: transcriber
+  name: #{ bootstrap_apps.milo.database.name }#
+  user: #{ bootstrap_apps.milo.database.user }#
 
 # Ingress configuration (if needed)
 ingress:

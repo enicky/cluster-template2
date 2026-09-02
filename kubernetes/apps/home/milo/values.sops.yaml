@@ -1,19 +1,20 @@
----
-# Encrypted database secrets for Milo
-# Edit with: sops templates/config/kubernetes/apps/home/milo/values.sops.yaml.j2
-
-postgres-user: ENC[AES256_GCM,data:...,iv:...,tag:...]
-postgres-password: ENC[AES256_GCM,data:...,iv:...,tag:...]
-postgres-db: ENC[AES256_GCM,data:...,iv:...,tag:...]
-
+# This file should be encrypted with SOPS after rendering
+# The password is sourced from bootstrap-apps.yaml (which is not checked in)
+env:
+  POSTGRES_PASSWORD: CHANGE_ME_SECURE_PASSWORD
 sops:
-  kms: []
-  gcp_kms: []
-  azure_kv: []
-  hc_vault: []
-  age: []
-  lastmodified: '2026-09-02T00:00:00Z'
-  mac: ENC[AES256_GCM,data:...,iv:...,tag:...]
-  pgp: []
-  unencrypted_suffix: _unencrypted
-  version: 3.7.3
+  age:
+    - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBtbWc1K1ZMajJDUWJqaHYz
+        aUgyK0RuaGxCVVBoSEV5KzJ4cmZLMGVZNlhBCk1vaFNsM09ZNUZGUS9lWUZwVlha
+        bVpWS05WOTc3czFKcG9xcnd6TUJFcmcKLS0tIEZqcTNSQk9BWVZLdlFOSkFKYXlr
+        dkU1RTVEM1RQUGRaLzBuSXE3Nnp2QTgKWMMsEacZiVGkCbDHm3oAv0cDqsW1CRCL
+        0Ge4F8dwZSPlws1+Z/5Rnw8mpJ6qBiU4IQSnJ2DXB51SXJ/mK8Si+w==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-09-02T12:44:19Z"
+  mac: ENC[AES256_GCM,data:sBz424Iucx12HH7PiLN0+TT1LMSLHyK1HsSesAX/JD35enL2R+9BoRNTkXhEGkMkeSpAUAD/WL+sV77l0CxxnrBvjVQoODpCdbfF1Yg6/50lDZYSHvc9KP32gOkx/BBM1hWvGqEiJTYTYYm/+9ot64ii57o1edJnovS/PCMjO/M=,iv:7LEDdrwAt65EU+nzQFK2NMpA+EIVNV7Pa00fSGTWy7Q=,tag:dver6coZieh5YB7H/AmyEA==,type:str]
+  encrypted_regex: ^(data|stringData)$
+  mac_only_encrypted: true
+  version: 3.12.1
