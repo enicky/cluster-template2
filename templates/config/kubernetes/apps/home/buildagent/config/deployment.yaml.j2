@@ -17,13 +17,14 @@ spec:
     spec:
       serviceAccountName: buildagent
       securityContext:
-        runAsUser: 1000
-        runAsNonRoot: true
         fsGroup: 1000
       containers:
         - name: buildagent
-          image: neichmann/buildagent:arm64-20260901211724
+          image: neichmann/buildagent:arm64-20260902095519
           imagePullPolicy: Always
+          securityContext:
+            runAsUser: 1000
+            runAsNonRoot: true
           env:
             - name: AZP_URL
               value: #{ bootstrap_apps.buildagent.organization_url }#
@@ -36,6 +37,8 @@ spec:
                 secretKeyRef:
                   name: buildagent-token
                   key: AZP_TOKEN
+            - name: DOCKER_HOST
+              value: tcp://localhost:2375
           resources:
             requests:
               cpu: 500m
@@ -44,17 +47,33 @@ spec:
               cpu: 2000m
               memory: 2Gi
           volumeMounts:
-            - name: docker
-              mountPath: /var/run/docker.sock
             - name: agent-data
               mountPath: /home/agentuser/agent
+        - name: dind
+          image: docker:27-dind
+          securityContext:
+            privileged: true
+          env:
+            - name: DOCKER_TLS_CERTDIR
+              value: ""
+          args:
+            - --host=tcp://0.0.0.0:2375
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 2000m
+              memory: 4Gi
+          volumeMounts:
+            - name: docker-lib
+              mountPath: /var/lib/docker
       volumes:
-        - name: docker
-          hostPath:
-            path: /var/run/docker.sock
         - name: agent-data
           persistentVolumeClaim:
             claimName: buildagent-data
+        - name: docker-lib
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

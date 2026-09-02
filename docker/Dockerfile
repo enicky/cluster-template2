@@ -10,7 +10,18 @@ RUN apt-get update && apt-get install -y \
     libssl3 \
     zlib1g \
     ca-certificates \
+    iputils-ping \
+    gnupg \
+    lsb-release \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Docker CLI only (no daemon) - talks to the DinD sidecar over DOCKER_HOST
+RUN install -m 0755 -d /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc && \
+    chmod a+r /etc/apt/keyrings/docker.asc && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list && \
+    apt-get update && apt-get install -y docker-ce-cli && \
+    rm -rf /var/lib/apt/lists/*
 
 # Create agent user (will have UID 1000)
 RUN useradd -m -s /bin/bash agentuser
