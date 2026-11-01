@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-dashboard-runtime-config
+  namespace: home
+data:
+  runtime-config.js: |
+    window.__IMMERSIVE_ROOM_CONFIG__ = {
+      pttWebSocketUrl: "wss://jetson-ws.#{ cloudflare_domain }#/ws/ppt"
+    };
