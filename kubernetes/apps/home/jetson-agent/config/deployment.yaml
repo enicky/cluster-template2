@@ -1,0 +1,89 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jetson-agent-rk1
+  namespace: home
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: jetson-agent-rk1
+  template:
+    metadata:
+      labels:
+        app: jetson-agent-rk1
+    spec:
+      automountServiceAccountToken: false
+      nodeSelector:
+        kubernetes.io/arch: arm64
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: jetson-agent
+          image: immersiveroom.azurecr.io/immersive-room/jetson-agent-rk1:latest
+          imagePullPolicy: Always
+          ports:
+            - name: dashboard
+              containerPort: 8005
+              protocol: TCP
+            - name: esp-websocket
+              containerPort: 9001
+              protocol: TCP
+          env:
+            - name: BROKER_URL
+              value: "wss://ca-immersive-room-broker-staging.greenforest-cffd6391.westeurope.azurecontainerapps.io"
+            - name: DEVICE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: jetson-agent
+                  key: DEVICE_TOKEN
+            - name: DEVICE_ID
+              value: jetson-agent-rk1
+            - name: LOG_LEVEL
+              value: info
+            - name: DASHBOARD_PORT
+              value: "8005"
+            - name: DASHBOARD_HOST
+              value: 0.0.0.0
+          volumeMounts:
+            - name: config
+              mountPath: /app/config
+            - name: data
+              mountPath: /app/data
+          startupProbe:
+            httpGet:
+              path: /health
+              port: dashboard
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 30
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: dashboard
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: dashboard
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+            limits:
+              cpu: 2000m
+              memory: 2Gi
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: jetson-agent-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: jetson-agent-data

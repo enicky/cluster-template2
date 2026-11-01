@@ -1,0 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jetson-agent
+  namespace: home
+spec:
+  type: ClusterIP
+  selector:
+    app: jetson-agent-rk1
+  ports:
+    - name: dashboard
+      port: 8005
+      targetPort: dashboard
+      protocol: TCP
+    - name: esp-websocket
+      port: 9001
+      targetPort: esp-websocket
+      protocol: TCP

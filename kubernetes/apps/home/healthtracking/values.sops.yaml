@@ -7,14 +7,14 @@ sops:
     - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
       enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSByMm54cDJVcG1ocGx4ZEtt
-        azBZQytaUlA2eEdacS8yNmFKaWpQYXlxWkFvCjh0VVpXOEdtbzZpenVkd3hBUVZE
-        OEJ4YmhTQXV6QWJDVjlNSEp0Q0JONzQKLS0tIDhhUkk3NWI3czB3enVIWjR2K0Rj
-        VFlNdzd5K3BndlFYR21EZDNndXZJNXMKKy+09ItqGhxRjQQr5td92Hvq1D+dA36p
-        HCHmRf5TuQxWD8CAja4MpnnYxU7Nbzy3ynKKPv08Xk5Z2odWLqvTaQ==
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBab3lyYzIvdG1WQUcwVm9M
+        OGhWT2Z0aVZINy9Cd1JFd3NQdEJPRXJjMkFFClJoNGR1RUR1empiK1NjWUQxZk44
+        aFRyRllPTjhscnBlb1czc2prV1NRU1UKLS0tIG5FWGFqQ0FlQ3JiNmZwMnlNbTMy
+        aC9DbkxhY0hwS3NxYTAraFRVVEVqSjAK5rLueNw6a1tZ8Z4PBjn9EO7zCLLq2IbE
+        OciZ945dt68LAFg4gLdY/EssVm+v5tyfOSCu1TPF1dMH060WYQZamQ==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2026-09-02T12:44:19Z"
-  mac: ENC[AES256_GCM,data:VGh7o8b2Tz2FHi0IBJfR1JYxUobSiLX/OkauCuGwLl8S0Umj4ZZXPqBZEE2gnf1el2/GH1kt6zxgtERWQIAtx0CGPQJonifxOn5O+ZX2aUE0Fz1CvIt8pQT9F9Gp6DYlBGUan6VulpWYLkEzXslB32BSJ9wC1tGMlvFoiN3pq2s=,iv:C4Sf4/XametbFd7GWUfVEl2qG33xm/hxoDoQH/u95xU=,tag:Sxw49VsPYSsgzbvOATUQZA==,type:str]
+  lastmodified: "2026-11-01T16:11:08Z"
+  mac: ENC[AES256_GCM,data:kMq2HrGTDLb53qqpNuPgWQ6exCYCDCvA1UUE7ydTI6yBm2XHzvxHECHhZQxpCnPWQye6evqhMwgzBH2WecX3sA8OwPuQVP+j4j01MQEze/PcIzxCl1OFCPHSTG2KzuQXTEJgriYba5jsnsta1BzBSzlBuk73kURDjmTHNZL+ZxY=,iv:7ed9djdiPRvWNApKasMqFycbqPBHSrFW4xkMy1yRkBI=,tag:AChP5ZtCLHWwUaQMzojmlw==,type:str]
   encrypted_regex: ^(data|stringData)$
   mac_only_encrypted: true
   version: 3.12.1
