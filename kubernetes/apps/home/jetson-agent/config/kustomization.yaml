@@ -8,4 +8,5 @@ generators:
 resources:
   - pvcs.yaml
   - deployment.yaml
+  - http-routes.yaml
   - service.yaml
