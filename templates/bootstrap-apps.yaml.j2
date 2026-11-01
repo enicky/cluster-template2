@@ -43,6 +43,7 @@ bootstrap_apps:
 
   jetson_agent:
     device_token: "{{ JETSON_AGENT_DEVICE_TOKEN }}"  # Will be encrypted by SOPS
+    dashboard_auth_token: "{{ JETSON_DASHBOARD_AUTH_TOKEN }}"  # Will be encrypted by SOPS
 
   longhorn:
     ingress:

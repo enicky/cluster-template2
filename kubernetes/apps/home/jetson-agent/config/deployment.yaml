@@ -41,6 +41,11 @@ spec:
                 secretKeyRef:
                   name: jetson-agent
                   key: DEVICE_TOKEN
+            - name: DASHBOARD_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: jetson-agent
+                  key: DASHBOARD_AUTH_TOKEN
             - name: DEVICE_ID
               value: jetson-agent-rk1
             - name: LOG_LEVEL
