@@ -17,6 +17,8 @@ spec:
         app: jetson-agent-rk1
     spec:
       automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: acr-pull
       nodeSelector:
         kubernetes.io/arch: arm64
       terminationGracePeriodSeconds: 30
