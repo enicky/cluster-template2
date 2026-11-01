@@ -23,7 +23,7 @@ spec:
         kubernetes.io/arch: arm64
       containers:
         - name: vestaboard
-          image: immersiveroom.azurecr.io/immersive-room/vestaboard-mock:latest
+          image: immersiveroom.azurecr.io/immersive-room/vestaboard-mock:20261101.1
           imagePullPolicy: Always
           ports:
             - name: http
