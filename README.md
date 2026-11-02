@@ -141,6 +141,24 @@ These guidelines provide a strong baseline, but there are always exceptions and 
     git push
     ```
 
+### Jetson Agent Voice (PTT)
+
+The Agent Voice WebSocket server binds port `9001` only when its Striide
+configuration is present. Add these values to the local, git-ignored
+`bootstrap-apps.yaml` under `jetson_agent` before rendering:
+
+```yaml
+jetson_agent:
+  striide_voice_url: "wss://<Striide voice endpoint>"
+  striide_voice_workflow_uuid: "<workflow UUID>"
+  striide_voice_auth_token: "<auth token>"
+```
+
+The Jetson Secret template copies these values into the SOPS-encrypted
+`jetson-agent` Secret. Do not commit the plaintext bootstrap configuration.
+After the Secret is updated, restart the Jetson agent so its environment is
+refreshed.
+
 > [!TIP]
 > Using a **private repository**? Make sure to paste the public key from `github-deploy.key.pub` into the deploy keys section of your GitHub repository settings. This will make sure Argo has read/write access to your repository.
 

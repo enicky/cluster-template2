@@ -46,6 +46,24 @@ spec:
                 secretKeyRef:
                   name: jetson-agent
                   key: DASHBOARD_AUTH_TOKEN
+            - name: STRIIDE_VOICE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: jetson-agent
+                  key: STRIIDE_VOICE_URL
+                  optional: true
+            - name: STRIIDE_VOICE_WORKFLOW_UUID
+              valueFrom:
+                secretKeyRef:
+                  name: jetson-agent
+                  key: STRIIDE_VOICE_WORKFLOW_UUID
+                  optional: true
+            - name: STRIIDE_VOICE_AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: jetson-agent
+                  key: STRIIDE_VOICE_AUTH_TOKEN
+                  optional: true
             - name: DEVICE_ID
               value: jetson-agent-rk1
             - name: LOG_LEVEL

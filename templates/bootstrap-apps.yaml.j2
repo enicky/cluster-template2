@@ -44,6 +44,10 @@ bootstrap_apps:
   jetson_agent:
     device_token: "{{ JETSON_AGENT_DEVICE_TOKEN }}"  # Will be encrypted by SOPS
     dashboard_auth_token: "{{ JETSON_DASHBOARD_AUTH_TOKEN }}"  # Will be encrypted by SOPS
+    # Required by the Agent Voice WebSocket server; the auth token is encrypted by SOPS.
+    striide_voice_url: "{{ STRIIDE_VOICE_URL }}"
+    striide_voice_workflow_uuid: "{{ STRIIDE_VOICE_WORKFLOW_UUID }}"
+    striide_voice_auth_token: "{{ STRIIDE_VOICE_AUTH_TOKEN }}"  # Will be encrypted by SOPS
 
   longhorn:
     ingress:
