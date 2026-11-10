@@ -1,0 +1,126 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: management
+  namespace: home
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: management
+  template:
+    metadata:
+      labels:
+        app: management
+    spec:
+      automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: acr-pull
+      nodeSelector:
+        kubernetes.io/arch: arm64
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: management
+          image: immersiveroom.azurecr.io/immersive-room/management-mcp:20261110.1
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8004
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "8004"
+            - name: BROKER_URL
+              value: ws://broker.home.svc.cluster.local:8765
+            - name: MCP_ALLOWED_HOSTS
+              value: management.gitlab.be
+            - name: MCP_ALLOWED_ORIGINS
+              value: https://web-dashboard.gitlab.be
+            - name: MCP_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: management-secrets
+                  key: MCP_TOKEN
+            - name: MANAGEMENT_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: management-secrets
+                  key: MANAGEMENT_API_TOKEN
+            - name: PRESENCE_SOURCE_PRINCIPALS_JSON
+              value: "{}"
+            - name: KIOSK_WELCOME_IMAGE_MODEL
+              value: gpt-image-1
+            - name: KIOSK_WELCOME_FOUNDRY_MODEL
+              value: FLUX.2-flex
+            - name: KIOSK_WELCOME_FOUNDRY_AGENT_MODEL
+              value: gpt-5
+            - name: KIOSK_WELCOME_FOUNDRY_AGENT_IMAGE_MODEL
+              value: gpt-image-1
+            - name: KIOSK_WELCOME_DRAFT_TTL_HOURS
+              value: "24"
+            - name: KIOSK_HTML_DRAFT_RETENTION_DAYS
+              value: "90"
+            - name: KIOSK_HTML_DRAFT_CLEANUP_INTERVAL_SECONDS
+              value: "86400"
+            - name: KIOSK_WELCOME_FONT_PATH
+              value: /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf
+            # Azure storage (option A: service principal via DefaultAzureCredential)
+            - name: AZURE_TENANT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: management-secrets
+                  key: AZURE_TENANT_ID
+            - name: AZURE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: management-secrets
+                  key: AZURE_CLIENT_ID
+            - name: AZURE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: management-secrets
+                  key: AZURE_CLIENT_SECRET
+            - name: AZURE_STORAGE_ACCOUNT_NAME
+              value: REPLACE_ME_STORAGE_ACCOUNT_NAME
+            - name: AZURE_STORAGE_BLOB_URL
+              value: https://REPLACE_ME_STORAGE_ACCOUNT_NAME.blob.core.windows.net/
+            - name: AZURE_STORAGE_TABLE_URL
+              value: https://REPLACE_ME_STORAGE_ACCOUNT_NAME.table.core.windows.net/
+            - name: AZURE_STORAGE_BLOB_CONTAINER
+              value: kiosk-assets
+            - name: IMAGE_SERVICE_BLOB_CONTAINER
+              value: image-services
+            - name: AZURE_STORAGE_TABLE_NAME
+              value: KioskMetadata
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 30
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
