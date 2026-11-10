@@ -36,7 +36,7 @@ spec:
               protocol: TCP
           env:
             - name: BROKER_URL
-              value: "wss://ca-immersive-room-broker-staging.greenforest-cffd6391.westeurope.azurecontainerapps.io"
+              value: "ws://broker.home.svc.cluster.local:8765"
             - name: DEVICE_TOKEN
               valueFrom:
                 secretKeyRef:
