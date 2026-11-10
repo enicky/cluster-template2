@@ -23,7 +23,7 @@ spec:
         kubernetes.io/arch: arm64
       containers:
         - name: avserver
-          image: immersiveroom.azurecr.io/immersive-room/avserver-mock:20261110.2
+          image: immersiveroom.azurecr.io/immersive-room/avserver-mock:20261101.1
           imagePullPolicy: Always
           ports:
             - name: http
