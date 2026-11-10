@@ -1,0 +1,84 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: broker
+  namespace: home
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: broker
+  template:
+    metadata:
+      labels:
+        app: broker
+    spec:
+      automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: acr-pull
+      nodeSelector:
+        kubernetes.io/arch: arm64
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: broker
+          image: immersiveroom.azurecr.io/immersive-room/broker:20261109.2
+          imagePullPolicy: Always
+          ports:
+            - name: websocket
+              containerPort: 8765
+              protocol: TCP
+          env:
+            - name: BROKER_PORT
+              value: "8765"
+            - name: TOKENS_FILE
+              value: /etc/immersive/tokens.json
+            - name: BROKER_KIOSK_TOKEN_FILE
+              value: /var/lib/immersive-room/kiosk-device-tokens.json
+            - name: PRESENCE_ROUTES_FILE
+              value: /var/lib/immersive-room/presence-routes.json
+          volumeMounts:
+            - name: tokens
+              mountPath: /etc/immersive/tokens.json
+              subPath: tokens.json
+              readOnly: true
+            - name: data
+              mountPath: /var/lib/immersive-room
+          startupProbe:
+            tcpSocket:
+              port: websocket
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 30
+          livenessProbe:
+            tcpSocket:
+              port: websocket
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: websocket
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+      volumes:
+        - name: tokens
+          secret:
+            secretName: broker-tokens
+            items:
+              - key: tokens.json
+                path: tokens.json
+        - name: data
+          persistentVolumeClaim:
+            claimName: broker-data
