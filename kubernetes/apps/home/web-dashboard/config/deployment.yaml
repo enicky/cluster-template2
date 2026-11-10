@@ -23,7 +23,7 @@ spec:
         kubernetes.io/arch: arm64
       containers:
         - name: web-dashboard
-          image: immersiveroom.azurecr.io/immersive-room/web-dashboard:20261109.2
+          image: immersiveroom.azurecr.io/immersive-room/web-dashboard:20261110.2
           imagePullPolicy: Always
           ports:
             - name: http
