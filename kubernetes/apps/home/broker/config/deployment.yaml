@@ -25,7 +25,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: broker
-          image: immersiveroom.azurecr.io/immersive-room/broker:20261109.2
+          image: immersiveroom.azurecr.io/immersive-room/broker:20261110.1
           imagePullPolicy: Always
           ports:
             - name: websocket
