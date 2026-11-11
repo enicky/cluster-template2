@@ -20,14 +20,14 @@ sops:
     - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
       enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBWQUh2SzlkTTI3UGZDbUxs
-        bW9Sem9xOXZmZXpoeWxDdnZvU21ncTJMS3pNClZQbzhHYm44UmU4bHVia3R6cnlV
-        OHBoK2h1V2duM1BtZ0NMU2tnRllSZlEKLS0tIHRsZVB4Ykh1RTNweDFJOHZnOUNr
-        b1ZPWjY2ZjExWkJwYkR4OEZPZ2hrcTAKvbQv+jAagh0Lm9ahtN+gqRzKY/ABej9n
-        N2rK8bUOKe0AfwpY0lweUmcVcZ4sl4dbFrvvBo/0OJbLDTS9jwQP3g==
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA0Q1VhcGNLeGFEUWo3MDkx
+        RFFEOTNHNW5pOG1Jcm5RZTgyZHBwMWtTRVZFCmtLMWtmc1pFSHllcXhLcjZzdi80
+        L3BoL05SS3o5dHNWVEVxRmVDTkVOVTQKLS0tIDhlVnJmbldlRU1TMEZhSGRjRkda
+        RkU5L1R1ZVREa2RFNW53OEJXb0dGN3cKs2aDCKoJMLH6tCjDr7BfE16xKeH8vrGK
+        Pc5vl/h9hDgjF19SACCRuZq5uf3RU14mhAV/EDjyeTIj3MCSb27rbw==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2026-11-11T16:12:02Z"
-  mac: ENC[AES256_GCM,data:EuUcJ7m6NSuibxSPXPjJRmG0UJQSI6xG2c/li6aA7L8u+gkhalJAnmXbcIEJdGwcux38+3IklZ/8DUlqBXfDBzTtFA60+41gLr/DuCRv3JL8TsLwjFGITc+vnVNLyIuNtzqMsdtgEvG5gSuXrd0/NZbliDQf77/+xKEgZbq7Z4c=,iv:LEoz1JZaTA41Q7IdtgYC6I4XMB183hYkbXT492p+zOA=,tag:lE2Pys0NUfBpr5CTYpiS4w==,type:str]
+  lastmodified: "2026-11-11T16:28:07Z"
+  mac: ENC[AES256_GCM,data:ZWEZzMNT/ifFDnb3yXSYr/Qf5b1vObtchxcG3uzDF4bvbp5jhOUPke0J/318If/zGUFSB6LWtIGIa+pXcJq+V2j+vYnrDH0yn323lsV/cCK8uZqosQWxkhhmkwH9Tj2VoM4HLOXvi1ZkjJpoVRTAXVwfBp4y202jsoH48+oqY7w=,iv:kMMGuK9jLcXLAgnEQXLI5+KDjXb6PhINDsBlgp0sFBc=,tag:Yh1BW71qSvvWCWYIqrtXIg==,type:str]
   encrypted_regex: ^(data|stringData)$
   mac_only_encrypted: true
   version: 3.12.1
