@@ -1,0 +1,83 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image-services-mcp
+  namespace: home
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: image-services-mcp
+  template:
+    metadata:
+      labels:
+        app: image-services-mcp
+    spec:
+      automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: acr-pull
+      nodeSelector:
+        kubernetes.io/arch: arm64
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: image-services-mcp
+          image: #{ bootstrap_apps.image_services_mcp.image }#
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8007
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "8007"
+            - name: IMAGE_SERVICES_MCP_ALLOWED_HOSTS
+              value: image-services-mcp.#{ cloudflare_domain }#
+            - name: IMAGE_SERVICES_MCP_ALLOWED_ORIGINS
+              value: https://web-dashboard.#{ cloudflare_domain }#
+            - name: IMAGE_SERVICES_MCP_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: image-services-mcp-secrets
+                  key: IMAGE_SERVICES_MCP_API_TOKEN
+            - name: KIOSK_WELCOME_OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: image-services-mcp-secrets
+                  key: KIOSK_WELCOME_OPENAI_API_KEY
+            - name: KIOSK_WELCOME_FOUNDRY_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: image-services-mcp-secrets
+                  key: KIOSK_WELCOME_FOUNDRY_API_KEY
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 30
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi

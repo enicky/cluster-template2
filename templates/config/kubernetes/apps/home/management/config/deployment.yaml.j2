@@ -50,6 +50,16 @@ spec:
                 secretKeyRef:
                   name: management-secrets
                   key: MANAGEMENT_API_TOKEN
+            - name: APPLICATIONS_MCP_URL
+              value: http://applications.home.svc.cluster.local:8006/sse
+            - name: AV_MCP_URL
+              value: http://av-mcp.home.svc.cluster.local:8000/sse
+            - name: AUDIO_MCP_URL
+              value: http://audio-mcp.home.svc.cluster.local:8001/sse
+            - name: DISPLAY_MCP_URL
+              value: http://display-mcp.home.svc.cluster.local:8002/sse
+            - name: VESTABOARD_MCP_URL
+              value: http://vestaboard-mcp.home.svc.cluster.local:8003/sse
             - name: PRESENCE_SOURCE_PRINCIPALS_JSON
               value: "{}"
             - name: KIOSK_WELCOME_IMAGE_MODEL
@@ -85,11 +95,11 @@ spec:
                   name: management-secrets
                   key: AZURE_CLIENT_SECRET
             - name: AZURE_STORAGE_ACCOUNT_NAME
-              value: REPLACE_ME_STORAGE_ACCOUNT_NAME
+              value: #{ bootstrap_apps.management.storage_account_name }#
             - name: AZURE_STORAGE_BLOB_URL
-              value: https://REPLACE_ME_STORAGE_ACCOUNT_NAME.blob.core.windows.net/
+              value: https://#{ bootstrap_apps.management.storage_account_name }#.blob.core.windows.net/
             - name: AZURE_STORAGE_TABLE_URL
-              value: https://REPLACE_ME_STORAGE_ACCOUNT_NAME.table.core.windows.net/
+              value: https://#{ bootstrap_apps.management.storage_account_name }#.table.core.windows.net/
             - name: AZURE_STORAGE_BLOB_CONTAINER
               value: kiosk-assets
             - name: IMAGE_SERVICE_BLOB_CONTAINER

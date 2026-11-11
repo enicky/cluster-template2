@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: applications
+  namespace: home
+spec:
+  type: ClusterIP
+  selector:
+    app: applications
+  ports:
+    - name: http
+      port: 8006
+      targetPort: http
+      protocol: TCP

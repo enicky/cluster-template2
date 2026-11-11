@@ -56,3 +56,27 @@ bootstrap_apps:
 
   broker:
     image: "immersiveroom.azurecr.io/immersive-room/broker:latest"
+
+  applications:
+    image: "immersiveroom.azurecr.io/immersive-room/applications-mcp:20261111.1"
+
+  av_mcp:
+    image: "immersiveroom.azurecr.io/immersive-room/av-mcp:20261111.1"
+
+  audio_mcp:
+    image: "immersiveroom.azurecr.io/immersive-room/audio-mcp:20261111.1"
+
+  display_mcp:
+    image: "immersiveroom.azurecr.io/immersive-room/display-mcp:20261111.1"
+
+  vestaboard_mcp:
+    image: "immersiveroom.azurecr.io/immersive-room/vestaboard-mcp:20261111.1"
+
+  image_services_mcp:
+    image: "immersiveroom.azurecr.io/immersive-room/image-services-mcp:20261111.1"
+
+  room_mailbox_mcp:
+    image: "immersiveroom.azurecr.io/immersive-room/roommailbox-mcp:20261111.1"
+  management:
+    image: "immersiveroom.azurecr.io/immersive-room/management-mcp:latest"  #
+    storage_account_name: "{{ MANAGEMENT_STORAGE_ACCOUNT_NAME }}"

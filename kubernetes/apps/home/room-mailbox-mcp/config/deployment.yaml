@@ -1,0 +1,73 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: room-mailbox-mcp
+  namespace: home
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: room-mailbox-mcp
+  template:
+    metadata:
+      labels:
+        app: room-mailbox-mcp
+    spec:
+      automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: acr-pull
+      nodeSelector:
+        kubernetes.io/arch: arm64
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: room-mailbox-mcp
+          image: immersiveroom.azurecr.io/immersive-room/roommailbox-mcp:20261111.1
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8008
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "8008"
+            - name: ROOMMAILBOX_MCP_ALLOWED_HOSTS
+              value: room-mailbox-mcp.gitlab.be
+            - name: ROOMMAILBOX_MCP_ALLOWED_ORIGINS
+              value: https://web-dashboard.gitlab.be
+            - name: ROOMMAILBOX_MCP_API_KEYS
+              valueFrom:
+                secretKeyRef:
+                  name: room-mailbox-mcp-secrets
+                  key: ROOMMAILBOX_MCP_API_KEYS
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 30
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi

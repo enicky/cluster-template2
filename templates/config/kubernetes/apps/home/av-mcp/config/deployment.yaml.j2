@@ -1,0 +1,78 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: av-mcp
+  namespace: home
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: av-mcp
+  template:
+    metadata:
+      labels:
+        app: av-mcp
+    spec:
+      automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: acr-pull
+      nodeSelector:
+        kubernetes.io/arch: arm64
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: av-mcp
+          image: #{ bootstrap_apps.av_mcp.image }#
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "8000"
+            - name: BROKER_URL
+              value: ws://broker.home.svc.cluster.local:8765
+            - name: MCP_ALLOWED_HOSTS
+              value: av-mcp.#{ cloudflare_domain }#
+            - name: MCP_ALLOWED_ORIGINS
+              value: https://web-dashboard.#{ cloudflare_domain }#
+            - name: MCP_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: av-mcp-secrets
+                  key: MCP_TOKEN
+            - name: AV_MCP_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: av-mcp-secrets
+                  key: AV_MCP_API_TOKEN
+          # The SSE endpoint requires a bearer token, so a TCP check is used instead of HTTP.
+          startupProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 30
+          livenessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi

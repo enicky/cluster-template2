@@ -79,7 +79,7 @@ Add an arm64 (and amd64, if needed) build to the management pipeline using `dock
 - Set `PRESENCE_SOURCE_PRINCIPALS_JSON` (currently `{}`) to the staging device-to-principal mapping.
 - Rebuild and push the web-dashboard image with a new tag, then update `bootstrap_apps.web_dashboard.image`.
 - Confirm the management `MANAGEMENT_API_TOKEN` is entered in the dashboard login.
-- Keep `APPLICATIONS_MCP_URL` out of scope (applications MCP not yet in the cluster).
+- `APPLICATIONS_MCP_URL` is set to `http://applications.home.svc.cluster.local:8006/sse` in the cluster deployment (see proposal 003).
 
 ## Out of Scope
 

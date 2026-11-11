@@ -1,0 +1,79 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: applications
+  namespace: home
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: applications
+  template:
+    metadata:
+      labels:
+        app: applications
+    spec:
+      automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: acr-pull
+      nodeSelector:
+        kubernetes.io/arch: arm64
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: applications
+          image: immersiveroom.azurecr.io/immersive-room/applications-mcp:20261111.1
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8006
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "8006"
+            - name: BROKER_URL
+              value: ws://broker.home.svc.cluster.local:8765
+            - name: MCP_ALLOWED_HOSTS
+              value: applications-mcp.gitlab.be
+            - name: MCP_ALLOWED_ORIGINS
+              value: https://web-dashboard.gitlab.be
+            - name: MCP_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: applications-secrets
+                  key: MCP_TOKEN
+            - name: APPLICATIONS_MCP_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: applications-secrets
+                  key: APPLICATIONS_MCP_API_TOKEN
+          # The SSE endpoint returns 401 without a bearer token and streams otherwise,
+          # so a TCP check is used instead of an HTTP probe.
+          startupProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 30
+          livenessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
