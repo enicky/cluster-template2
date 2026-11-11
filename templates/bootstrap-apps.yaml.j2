@@ -80,3 +80,6 @@ bootstrap_apps:
   management:
     image: "immersiveroom.azurecr.io/immersive-room/management-mcp:latest"  #
     storage_account_name: "{{ MANAGEMENT_STORAGE_ACCOUNT_NAME }}"
+    MCP_TOKEN: #{ bootstrap_apps.management.database.mcp_token }#
+    MANAGEMENT_API_TOKEN: #{ bootstrap_apps.management.database.management_api_token }#
+    AZURE_STORAGE_CONNECTION_STRING: #{ bootstrap_apps.management.database.azure_storage_connection_string }#

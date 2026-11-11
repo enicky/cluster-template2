@@ -25,7 +25,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: av-mcp
-          image: immersiveroom.azurecr.io/immersive-room/av-mcp:20261111.1
+          image: immersiveroom.azurecr.io/immersive-room/av-mcp:20261111.2
           imagePullPolicy: Always
           ports:
             - name: http

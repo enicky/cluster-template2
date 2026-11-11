@@ -26,7 +26,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: management
-          image: immersiveroom.azurecr.io/immersive-room/management-mcp:20261110.2
+          image: immersiveroom.azurecr.io/immersive-room/management-mcp:20261111.2
           imagePullPolicy: Always
           ports:
             - name: http
@@ -79,7 +79,14 @@ spec:
               value: "86400"
             - name: KIOSK_WELCOME_FONT_PATH
               value: /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf
-            # Azure storage (option A: service principal via DefaultAzureCredential)
+            # Azure storage. Option B: connection string (used when set).
+            - name: AZURE_STORAGE_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: management-secrets
+                  key: AZURE_STORAGE_CONNECTION_STRING
+                  optional: true
+            # Option A: service principal via DefaultAzureCredential.
             - name: AZURE_TENANT_ID
               valueFrom:
                 secretKeyRef:

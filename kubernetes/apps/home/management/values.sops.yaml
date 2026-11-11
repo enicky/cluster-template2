@@ -1,0 +1,22 @@
+# This file should be encrypted with SOPS after rendering
+# The password is sourced from bootstrap-apps.yaml (which is not checked in)
+env:
+  MCP_TOKEN: null
+  MANAGEMENT_API_TOKEN: null
+  AZURE_STORAGE_CONNECTION_STRING: null
+sops:
+  age:
+    - recipient: age1086gtxn8l9dh0t2y0nu5ye0hczjyjc7q5tengjcf8lkynlta653sapg96f
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBLdzhJd1kzZ28xRGxSVmo5
+        OFhkUHNkeWIzSCtHMjBKZXcyZHhZMGNUOXdvClYyWXNjYWdob1poLzJja2d6Szlj
+        Vm5xQThmTitxNzNPejVYSkdTS2hiWmsKLS0tIFExbmFTTlZsQ1RXLzliY0lsbHA5
+        b012dUNtRVRJWVFCYWxBdXBTMklkSmsKyRT8QWO1nKzUJuvl48HKdmpTYfuphLAg
+        +pRQbRRqov51M2tsls+YDf0LH23flDgzEJ4gp3ethVoGlZD2rxPhhw==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-11-11T16:12:00Z"
+  mac: ENC[AES256_GCM,data:xHo2lgwRLceG4VafqIowZulycrEF9GpcgzqVjeVULNqOVfv+hDFYyCRhu4pZrtR/4KM1/EjkkqmDYctkD7CY3Igy32rnMUtBvPVniEHFWz/LQMdbljcn7JMDzrJZ8WcOFNrkHtw64eQ3KvfsMjfX5lGC9KVLVPtem7vC+YtI1QY=,iv:zUKVQ52RnYsyrnRC9Eufi99Pcm3Uc4JADiEydMb5iwc=,tag:A7JRiQo1DzmBH3wo2SRyTg==,type:str]
+  encrypted_regex: ^(data|stringData)$
+  mac_only_encrypted: true
+  version: 3.12.1
