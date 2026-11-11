@@ -37,6 +37,8 @@ spec:
           env:
             - name: BROKER_URL
               value: "ws://broker.home.svc.cluster.local:8765"
+            - name: DEVICE_AGENT_VERSION
+              value: "#{ bootstrap_apps.jetson_agent.agent_version }#"
             - name: DEVICE_TOKEN
               valueFrom:
                 secretKeyRef:

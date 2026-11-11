@@ -37,6 +37,8 @@ spec:
           env:
             - name: BROKER_URL
               value: "ws://broker.home.svc.cluster.local:8765"
+            - name: DEVICE_AGENT_VERSION
+              value: "20261111.2"
             - name: DEVICE_TOKEN
               valueFrom:
                 secretKeyRef:
