@@ -25,7 +25,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: jetson-agent
-          image: immersiveroom.azurecr.io/immersive-room/jetson-agent-rk1:20261111.2
+          image: immersiveroom.azurecr.io/immersive-room/jetson-agent-rk1:20261111.3
           imagePullPolicy: Always
           ports:
             - name: dashboard
