@@ -2,6 +2,6 @@
 # This file should be encrypted with SOPS after rendering
 # The password is sourced from bootstrap-apps.yaml (which is not checked in)
 env:
-  MCP_TOKEN: #{ bootstrap_apps.management.database.mcp_token }#
-  MANAGEMENT_API_TOKEN: #{ bootstrap_apps.management.database.management_api_token }#
-  AZURE_STORAGE_CONNECTION_STRING: #{ bootstrap_apps.management.database.azure_storage_connection_string }#
+  MCP_TOKEN: #{ bootstrap_apps.management.MCP_TOKEN }#
+  MANAGEMENT_API_TOKEN: #{ bootstrap_apps.management.MANAGEMENT_API_TOKEN }#
+  AZURE_STORAGE_CONNECTION_STRING: #{ bootstrap_apps.management.AZURE_STORAGE_CONNECTION_STRING }#

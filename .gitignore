@@ -22,3 +22,6 @@ talosconfig
 .venv/
 .DS_Store
 Thumbs.db
+
+# Rendered plaintext copy; never commit
+kubernetes/apps/home/management/values.sops.yaml
