@@ -25,7 +25,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: audio-mcp
-          image: immersiveroom.azurecr.io/immersive-room/audio-mcp:20261112.2
+          image: immersiveroom.azurecr.io/immersive-room/audio-mcp:20261112.3
           imagePullPolicy: Always
           ports:
             - name: http
