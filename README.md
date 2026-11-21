@@ -165,6 +165,8 @@ Tool Planner is deployed from its versioned Helm chart in the
 `enicky/toolplanner` repository. The cluster template provides the Argo CD
 application, its GHCR-pull secret, and a dedicated Longhorn-backed PostgreSQL
 StatefulSet. The app is exposed at `https://toolplanner.<cloudflare_domain>`.
+Keep the chart's `fullnameOverride` set to `tool-planner` so its web Service
+matches the `tool-planner` HTTPRoute backend.
 
 Before rendering the cluster configuration, add this block to the local,
 git-ignored `bootstrap-apps.yaml` (or provide the matching variables through

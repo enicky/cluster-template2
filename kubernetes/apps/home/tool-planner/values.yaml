@@ -9,12 +9,12 @@ image:
   api:
     repository: ghcr.io/enicky/toolplanner-api
     tag: "v0.2.0"
-    digest: "sha256:b04406dc198c217aad531761d3fbc31904509133408f21b5627d0b8571f49230"
+    digest: "sha256:7e2875f7e3c0c4a7af69a83c921ff210a338391467ccdbb6d07a7c164a151baa"
     pullPolicy: IfNotPresent
   web:
     repository: ghcr.io/enicky/toolplanner-web
     tag: "v0.2.0"
-    digest: "sha256:706322e9a21e102beff84af026d80d95e00342e929097a0e20fe0c9c5c221dde"
+    digest: "sha256:fe218858582b9cf608c02e6c376bd22ed57daf95e5125105523ff7861899f32d"
     pullPolicy: IfNotPresent
 
 replicaCount:
