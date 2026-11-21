@@ -40,6 +40,16 @@ bootstrap_apps:
     striide_voice_auth_token: "{{ STRIIDE_VOICE_AUTH_TOKEN }}"  # Will be encrypted by SOPS
     agent_version: "20261111.2"
 
+  tool_planner:
+    chart_version: "{{ TOOL_PLANNER_CHART_VERSION }}"
+    api_digest: "{{ TOOL_PLANNER_API_DIGEST }}"
+    web_digest: "{{ TOOL_PLANNER_WEB_DIGEST }}"
+    postgres:
+      password: "{{ TOOL_PLANNER_POSTGRES_PASSWORD }}"  # Will be encrypted by SOPS
+    ghcr:
+      username: "{{ TOOL_PLANNER_GHCR_USERNAME }}"
+      read_token: "{{ TOOL_PLANNER_GHCR_READ_TOKEN }}"  # Will be encrypted by SOPS
+
   longhorn:
     ingress:
       host: "{{ LONGHORN_INGRESS_HOST }}"

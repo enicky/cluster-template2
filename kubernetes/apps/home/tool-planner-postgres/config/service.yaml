@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tool-planner-postgres
+  namespace: home
+spec:
+  clusterIP: None
+  selector:
+    app.kubernetes.io/name: tool-planner-postgres
+  ports:
+    - name: postgres
+      port: 5432
+      targetPort: postgres
+      protocol: TCP

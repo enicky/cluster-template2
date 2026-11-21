@@ -1,0 +1,34 @@
+---
+imagePullSecrets:
+  - name: tool-planner-ghcr
+
+nodeSelector:
+  kubernetes.io/arch: arm64
+
+image:
+  api:
+    repository: ghcr.io/enicky/toolplanner-api
+    tag: "v0.2.0"
+    digest: "sha256:b04406dc198c217aad531761d3fbc31904509133408f21b5627d0b8571f49230"
+    pullPolicy: IfNotPresent
+  web:
+    repository: ghcr.io/enicky/toolplanner-web
+    tag: "v0.2.0"
+    digest: "sha256:706322e9a21e102beff84af026d80d95e00342e929097a0e20fe0c9c5c221dde"
+    pullPolicy: IfNotPresent
+
+replicaCount:
+  api: 1
+  web: 1
+
+ingress:
+  enabled: false
+
+application:
+  publicBaseUrl: "https://toolplanner.gitlab.be"
+  cookieSecure: true
+  timeZone: Europe/Brussels
+
+secrets:
+  existingSecret: tool-planner-secrets
+  databaseUrlKey: database-url

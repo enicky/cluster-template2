@@ -1,0 +1,34 @@
+---
+imagePullSecrets:
+  - name: tool-planner-ghcr
+
+nodeSelector:
+  kubernetes.io/arch: arm64
+
+image:
+  api:
+    repository: ghcr.io/enicky/toolplanner-api
+    tag: "#{ bootstrap_apps.tool_planner.chart_version }#"
+    digest: "#{ bootstrap_apps.tool_planner.api_digest }#"
+    pullPolicy: IfNotPresent
+  web:
+    repository: ghcr.io/enicky/toolplanner-web
+    tag: "#{ bootstrap_apps.tool_planner.chart_version }#"
+    digest: "#{ bootstrap_apps.tool_planner.web_digest }#"
+    pullPolicy: IfNotPresent
+
+replicaCount:
+  api: 1
+  web: 1
+
+ingress:
+  enabled: false
+
+application:
+  publicBaseUrl: "https://toolplanner.#{ cloudflare_domain }#"
+  cookieSecure: true
+  timeZone: Europe/Brussels
+
+secrets:
+  existingSecret: tool-planner-secrets
+  databaseUrlKey: database-url

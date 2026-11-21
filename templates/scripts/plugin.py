@@ -25,6 +25,11 @@ def nthhost(value: str, query: int) -> str:
     return False
 
 
+# Base64-encode a string for Kubernetes dockerconfigjson secrets
+def base64_encode(value: str) -> str:
+    return base64.b64encode(value.encode('utf-8')).decode('ascii')
+
+
 # Return the age public or private key from age.key
 def age_key(key_type: str, file_path: str = 'age.key') -> str:
     try:
@@ -159,7 +164,8 @@ class Plugin(makejinja.plugin.Plugin):
     def filters(self) -> makejinja.plugin.Filters:
         return [
             basename,
-            nthhost
+            nthhost,
+            base64_encode
         ]
 
 

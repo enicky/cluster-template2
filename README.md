@@ -159,6 +159,41 @@ The Jetson Secret template copies these values into the SOPS-encrypted
 After the Secret is updated, restart the Jetson agent so its environment is
 refreshed.
 
+### Tool Planner
+
+Tool Planner is deployed from its versioned Helm chart in the
+`enicky/toolplanner` repository. The cluster template provides the Argo CD
+application, its GHCR-pull secret, and a dedicated Longhorn-backed PostgreSQL
+StatefulSet. The app is exposed at `https://toolplanner.<cloudflare_domain>`.
+
+Before rendering the cluster configuration, add this block to the local,
+git-ignored `bootstrap-apps.yaml` (or provide the matching variables through
+the cluster's bootstrap pipeline: `TOOL_PLANNER_CHART_VERSION`,
+`TOOL_PLANNER_API_DIGEST`, `TOOL_PLANNER_WEB_DIGEST`,
+`TOOL_PLANNER_POSTGRES_PASSWORD`, `TOOL_PLANNER_GHCR_USERNAME`, and
+`TOOL_PLANNER_GHCR_READ_TOKEN`. Keep the database password and GHCR token
+marked as secret variables.
+
+```yaml
+tool_planner:
+  chart_version: "v0.1.0"
+  api_digest: "sha256:<API digest from the image-build run>"
+  web_digest: "sha256:<web digest from the image-build run>"
+  postgres:
+    password: "<URL-safe password; generate with openssl rand -hex 32>"
+  ghcr:
+    username: "<GitHub username>"
+    read_token: "<GHCR read:packages token>"
+```
+
+Set `chart_version` to the published `vMAJOR.MINOR.PATCH` tag and use the exact
+API and web digests from its Actions run summary. The password must be
+URL-safe because it is used in the API database URL. `task configure` renders
+the templates and encrypts the database and GHCR secrets with SOPS; verify the
+generated Argo applications and secret files are encrypted before committing.
+The database uses a 20Gi Longhorn volume. Database backup and restore are not
+configured by this app and must be established before production use.
+
 > [!TIP]
 > Using a **private repository**? Make sure to paste the public key from `github-deploy.key.pub` into the deploy keys section of your GitHub repository settings. This will make sure Argo has read/write access to your repository.
 
