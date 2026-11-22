@@ -196,26 +196,86 @@ generated Argo applications and secret files are encrypted before committing.
 The database uses a 20Gi Longhorn volume. Database backup and restore are not
 configured by this app and must be established before production use.
 
-#### Automated Tool Planner releases
+#### Full Tool Planner release workflow
 
-After Tool Planner changes have been merged to its `main` branch, run the local
-release helper from a clean, up-to-date `main` checkout of this repository:
+The application and cluster configuration are separate repositories. Merge
+application changes first; then use the local release helper to publish images
+and prepare a cluster deployment PR.
 
-```sh
-./scripts/release-tool-planner.sh patch
-```
+1. **Develop and merge the application.** Start from an up-to-date Tool Planner
+   `main` and create a feature branch:
 
-Use `minor` or `major` instead of `patch` when appropriate. The helper calls
-Tool Planner's existing release script, waits for the tagged image build,
-downloads its digest metadata, updates the local git-ignored
-`bootstrap-apps.yaml`, runs `task configure -y`, and opens a cluster deployment
-PR. It never merges that PR or deploys directly. If a release tag was already
-published, use `./scripts/release-tool-planner.sh deploy vMAJOR.MINOR.PATCH`
-to prepare the cluster PR without publishing another tag. Set `TOOLPLANNER_REPO`
-if the Tool Planner checkout is not at `../../../ToolPlanner`.
+   ```sh
+   cd /Users/nicholase/projects/ToolPlanner
+   git switch main
+   git pull --ff-only origin main
+   git switch -c feature/my-change
+   ```
 
-The helper stages only the generated Tool Planner Argo Application and values;
-review any other files changed by `task configure -y` separately.
+   Implement the change and run the relevant checks. For example:
+
+   ```sh
+   cd web
+   npm test
+   npm run build
+   cd ../backend
+   uv sync --frozen --extra dev
+   uv run --frozen ruff check src tests migrations
+   uv run --frozen pytest -q
+   ```
+
+   Review and commit only the intended changes, then push the branch and open a
+   PR. Wait for required checks and merge the PR before releasing:
+
+   ```sh
+   git status --short
+   git add path/to/changed-file
+   git commit -m "feat: improve inventory search"
+   git push -u origin feature/my-change
+   gh pr create --base main --head feature/my-change
+   ```
+
+2. **Make cluster-template changes separately, if needed.** Start another
+   feature branch from the cluster-template `main`. Edit source files under
+   `templates/`, not generated files under `kubernetes/`. Then run
+   `task configure -y` to regenerate the Kubernetes files, review the output,
+   commit the source template and the required generated output, and merge that
+   PR before releasing.
+
+3. **Publish and prepare the deployment PR.** Make sure both repositories have
+   clean, up-to-date `main` checkouts and that the local, git-ignored
+   `bootstrap-apps.yaml` is configured. Authenticate `gh` for both GitHub
+   repositories and ensure `jq`, `yq`, and `task` are available. The Tool
+   Planner `main` must include the CI workflow's release-metadata artifact
+   change. Then run:
+
+   ```sh
+   cd /Users/nicholase/projects/home/cluster2/cluster-template
+   ./scripts/release-tool-planner.sh patch
+   ```
+
+   Choose `minor` or `major` instead of `patch` when appropriate. The helper
+   calls the existing Tool Planner tag script (which asks for confirmation),
+   waits for the GitHub Actions build, downloads the API/web digest artifact,
+   updates the local bootstrap values, runs `task configure -y`, and opens a
+   cluster deployment PR. It stages only the generated Tool Planner Argo
+   Application and values; review any other files changed by configuration
+   separately. The helper does not merge or deploy the PR.
+
+   If a tag was already published but its cluster PR still needs preparing,
+   resume without publishing another tag:
+
+   ```sh
+   ./scripts/release-tool-planner.sh deploy vMAJOR.MINOR.PATCH
+   ```
+
+4. **Deploy.** Review and merge the cluster deployment PR. Argo CD then syncs
+   the new chart and digest-pinned images. Do not push release commits directly
+   to `main`; the helper pushes a version tag to Tool Planner and a separate
+   deployment branch for the cluster PR.
+
+Set `TOOLPLANNER_REPO` if the Tool Planner checkout is not at the helper's
+default `../../../ToolPlanner` path.
 
 > [!TIP]
 > Using a **private repository**? Make sure to paste the public key from `github-deploy.key.pub` into the deploy keys section of your GitHub repository settings. This will make sure Argo has read/write access to your repository.
