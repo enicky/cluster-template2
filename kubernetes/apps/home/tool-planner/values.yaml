@@ -10,13 +10,13 @@ nodeSelector:
 image:
   api:
     repository: ghcr.io/enicky/toolplanner-api
-    tag: "v0.2.1"
-    digest: "sha256:7e2875f7e3c0c4a7af69a83c921ff210a338391467ccdbb6d07a7c164a151baa"
+    tag: "v0.2.2"
+    digest: "sha256:858b4f2ffbe960104f5edb83230601c44ba9bbdfce9c5fa7650f6acc0d3c8bb2"
     pullPolicy: IfNotPresent
   web:
     repository: ghcr.io/enicky/toolplanner-web
-    tag: "v0.2.1"
-    digest: "sha256:fe218858582b9cf608c02e6c376bd22ed57daf95e5125105523ff7861899f32d"
+    tag: "v0.2.2"
+    digest: "sha256:4ba12c418da5c54ef40dd4c5b626aa487adcdce717f39b3d9c13db79f55beaba"
     pullPolicy: IfNotPresent
 
 replicaCount:
