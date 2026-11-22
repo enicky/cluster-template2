@@ -196,6 +196,27 @@ generated Argo applications and secret files are encrypted before committing.
 The database uses a 20Gi Longhorn volume. Database backup and restore are not
 configured by this app and must be established before production use.
 
+#### Automated Tool Planner releases
+
+After Tool Planner changes have been merged to its `main` branch, run the local
+release helper from a clean, up-to-date `main` checkout of this repository:
+
+```sh
+./scripts/release-tool-planner.sh patch
+```
+
+Use `minor` or `major` instead of `patch` when appropriate. The helper calls
+Tool Planner's existing release script, waits for the tagged image build,
+downloads its digest metadata, updates the local git-ignored
+`bootstrap-apps.yaml`, runs `task configure -y`, and opens a cluster deployment
+PR. It never merges that PR or deploys directly. If a release tag was already
+published, use `./scripts/release-tool-planner.sh deploy vMAJOR.MINOR.PATCH`
+to prepare the cluster PR without publishing another tag. Set `TOOLPLANNER_REPO`
+if the Tool Planner checkout is not at `../../../ToolPlanner`.
+
+The helper stages only the generated Tool Planner Argo Application and values;
+review any other files changed by `task configure -y` separately.
+
 > [!TIP]
 > Using a **private repository**? Make sure to paste the public key from `github-deploy.key.pub` into the deploy keys section of your GitHub repository settings. This will make sure Argo has read/write access to your repository.
 
