@@ -51,6 +51,12 @@ spec:
                 secretKeyRef:
                   name: management-secrets
                   key: MANAGEMENT_API_TOKEN
+            - name: TAB5_IMR_TOKEN_SHA256
+              valueFrom:
+                secretKeyRef:
+                  name: management-secrets
+                  key: TAB5_IMR_TOKEN_SHA256
+                  optional: true
             - name: APPLICATIONS_MCP_URL
               value: http://applications.home.svc.cluster.local:8006/sse
             - name: AV_MCP_URL
