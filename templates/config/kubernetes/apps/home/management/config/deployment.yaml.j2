@@ -69,6 +69,8 @@ spec:
               value: #{ (bootstrap_apps.management.TAB5_IMR_PROJECTOR_POWER_ENABLED | default(false) | string | lower) | tojson }#
             - name: TAB5_IMR_PRESENT_ENABLED
               value: #{ (bootstrap_apps.management.TAB5_IMR_PRESENT_ENABLED | default(false) | string | lower) | tojson }#
+            - name: TAB5_IMR_VESTABOARD_ENABLED
+              value: #{ (bootstrap_apps.management.TAB5_IMR_VESTABOARD_ENABLED | default(false) | string | lower) | tojson }#
             - name: APPLICATIONS_MCP_URL
               value: http://applications.home.svc.cluster.local:8006/sse
             - name: AV_MCP_URL

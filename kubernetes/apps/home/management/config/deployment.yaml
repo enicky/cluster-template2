@@ -26,7 +26,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: management
-          image: immersiveroom.azurecr.io/immersive-room/management-mcp:20261123.5
+          image: immersiveroom.azurecr.io/immersive-room/management-mcp:20261123.7
           imagePullPolicy: Always
           ports:
             - name: http
@@ -68,6 +68,8 @@ spec:
             - name: TAB5_IMR_PROJECTOR_POWER_ENABLED
               value: "true"
             - name: TAB5_IMR_PRESENT_ENABLED
+              value: "true"
+            - name: TAB5_IMR_VESTABOARD_ENABLED
               value: "true"
             - name: APPLICATIONS_MCP_URL
               value: http://applications.home.svc.cluster.local:8006/sse
