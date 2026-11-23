@@ -25,7 +25,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: vestaboard-mcp
-          image: immersiveroom.azurecr.io/immersive-room/vestaboard-mcp:20261123.10
+          image: immersiveroom.azurecr.io/immersive-room/vestaboard-mcp:20261123.13
           imagePullPolicy: Always
           ports:
             - name: http
