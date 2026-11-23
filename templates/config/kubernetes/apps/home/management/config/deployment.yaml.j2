@@ -61,6 +61,8 @@ spec:
                   optional: true
             - name: TAB5_IMR_JETSON_DEVICE_ID
               value: "jetson-agent-rk1"
+            - name: TAB5_IMR_PRESET_BRIGHTNESS
+              value: #{ (bootstrap_apps.management.TAB5_IMR_PRESET_BRIGHTNESS | default('', true) | string) | tojson }#
             - name: APPLICATIONS_MCP_URL
               value: http://applications.home.svc.cluster.local:8006/sse
             - name: AV_MCP_URL
