@@ -26,7 +26,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: management
-          image: immersiveroom.azurecr.io/immersive-room/management-mcp:20261123.9
+          image: immersiveroom.azurecr.io/immersive-room/management-mcp:20261123.10
           imagePullPolicy: Always
           ports:
             - name: http
@@ -73,6 +73,14 @@ spec:
               value: "true"
             - name: TAB5_IMR_DESKTOP_DEVICE_ID
               value: "desktop-001"
+            - name: TAB5_IMR_JETSON_PTT_ORIGIN
+              value: "wss://jetson-ws.gitlab.be"
+            - name: TAB5_PTT_RELAY_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: management-secrets
+                  key: TAB5_PTT_RELAY_TOKEN
+                  optional: true
             - name: APPLICATIONS_MCP_URL
               value: http://applications.home.svc.cluster.local:8006/sse
             - name: AV_MCP_URL
