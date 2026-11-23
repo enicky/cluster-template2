@@ -26,7 +26,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: management
-          image: immersiveroom.azurecr.io/immersive-room/management-mcp:20261123.2
+          image: immersiveroom.azurecr.io/immersive-room/management-mcp:20261123.3
           imagePullPolicy: Always
           ports:
             - name: http
@@ -63,6 +63,8 @@ spec:
               value: "jetson-agent-rk1"
             - name: TAB5_IMR_PRESET_BRIGHTNESS
               value: "70"
+            - name: TAB5_RECEIPTS_DB_PATH
+              value: /var/lib/tab5-receipts/receipts.sqlite3
             - name: APPLICATIONS_MCP_URL
               value: http://applications.home.svc.cluster.local:8006/sse
             - name: AV_MCP_URL
@@ -129,6 +131,9 @@ spec:
               value: image-services
             - name: AZURE_STORAGE_TABLE_NAME
               value: KioskMetadata
+          volumeMounts:
+            - name: tab5-receipts
+              mountPath: /var/lib/tab5-receipts
           startupProbe:
             httpGet:
               path: /healthz
@@ -157,3 +162,7 @@ spec:
             limits:
               cpu: 1000m
               memory: 1Gi
+      volumes:
+        - name: tab5-receipts
+          persistentVolumeClaim:
+            claimName: management-tab5-receipts

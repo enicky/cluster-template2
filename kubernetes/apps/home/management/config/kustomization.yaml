@@ -8,4 +8,5 @@ generators:
 resources:
   - deployment.yaml
   - http-routes.yaml
+  - tab5-receipts-pvc.yaml
   - service.yaml
