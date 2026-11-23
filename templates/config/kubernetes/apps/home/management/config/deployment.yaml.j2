@@ -65,6 +65,8 @@ spec:
               value: #{ (bootstrap_apps.management.TAB5_IMR_PRESET_BRIGHTNESS | default('', true) | string) | tojson }#
             - name: TAB5_RECEIPTS_DB_PATH
               value: /var/lib/tab5-receipts/receipts.sqlite3
+            - name: TAB5_IMR_PROJECTOR_POWER_ENABLED
+              value: #{ (bootstrap_apps.management.TAB5_IMR_PROJECTOR_POWER_ENABLED | default(false) | string | lower) | tojson }#
             - name: APPLICATIONS_MCP_URL
               value: http://applications.home.svc.cluster.local:8006/sse
             - name: AV_MCP_URL
