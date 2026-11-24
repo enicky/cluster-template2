@@ -69,6 +69,8 @@ spec:
                   optional: true
             - name: DEVICE_ID
               value: jetson-agent-rk1
+            - name: OFFLINE_RECORDING_SOURCE
+              value: audio_bridge
             - name: TAB5_PTT_READ_ONLY_WORKFLOW_UUID
               value: "4408f0f7-5be7-f111-91f0-7ced8dad1343"
             - name: TAB5_PTT_RELAY_TOKEN
