@@ -40,7 +40,7 @@ Follow the same pattern as the broker under `templates/config/kubernetes/apps/ho
 - `management/config/deployment.yaml.j2`: one replica, `Recreate` strategy, `nodeSelector` `kubernetes.io/arch: arm64`, `acr-pull` imagePullSecret, port 8004, `/healthz` probes.
 - `management/config/service.yaml.j2`: ClusterIP `management` on port 8004.
 - `management/config/http-routes.yaml.j2`: host `management.#{ cloudflare_domain }#` through `envoy-external` (hostname to be confirmed).
-- `management/config/pvcs.yaml.j2`: Longhorn PVC only if Option B is chosen or local cache files are needed.
+- `management/config/tab5-receipts-pvc.yaml.j2`: Longhorn PVC mounted at `/var/lib/tab5-receipts`; it persists both Tab5 receipts and the enrollment SQLite database.
 - `management/config/secret-generator.yaml.j2` and a SOPS secret for tokens and Azure credentials.
 - Argo CD application at `templates/config/kubernetes/argo/apps/home/management.yaml.j2`.
 
@@ -52,6 +52,7 @@ Environment variables (values come from secrets or the bootstrap file):
 | `BROKER_URL` | `ws://broker.home.svc.cluster.local:8765` |
 | `MANAGEMENT_API_TOKEN` | secret (`management-secrets`, generated) |
 | `MCP_TOKEN` | secret (`management-secrets`, same value as the broker's `stg-mcp-management-*` principal) |
+| `TAB5_IMR_IDENTITY_DB_PATH` | `/var/lib/tab5-receipts/identity.sqlite3` on the existing Longhorn PVC; enables persistent claim-code and tablet-credential routes |
 | `MCP_ALLOWED_HOSTS` | `management.gitlab.be` |
 | `MCP_ALLOWED_ORIGINS` | `https://web-dashboard.gitlab.be` |
 | `AZURE_STORAGE_ACCOUNT_NAME` | Azure storage account (Option A) |
