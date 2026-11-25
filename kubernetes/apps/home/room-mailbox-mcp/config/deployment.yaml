@@ -25,7 +25,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: room-mailbox-mcp
-          image: immersiveroom.azurecr.io/immersive-room/roommailbox-mcp:20261124.3
+          image: immersiveroom.azurecr.io/immersive-room/roommailbox-mcp:20261125.1
           imagePullPolicy: Always
           ports:
             - name: http
